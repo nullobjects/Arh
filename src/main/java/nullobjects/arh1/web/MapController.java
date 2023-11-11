@@ -7,9 +7,9 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class MapController {
     @GetMapping("/")
-    public ModelAndView Kucesko() {
+    public ModelAndView MainPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("main_page"); // Set the view name (HTML file name without extension)
+        modelAndView.setViewName("main_page");
         return modelAndView;
     }
 }

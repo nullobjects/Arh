@@ -1,7 +1,9 @@
 let options = {
     center:[41.607, 21.753],
     zoom:9,
-    minZoom:9
+    minZoom:9,
+    icon:"/images/marker-icon.png",
+    shadowUrl:"/images/marker-shadow-icon.png",
 }
 
 let mapa = new L.map('map', options);
@@ -12,9 +14,6 @@ mapa.setMaxBounds([
     [42.472,24.082],
     [40.647,19.841],
 ]);
-
-let marker1 = new L.marker([41.607,21.753], {
-}).addTo(mapa)
 
 const data = {
     arte:{
@@ -76,7 +75,7 @@ const data = {
     }
 }
 
-for(let key in data){
+for (let key in data){
     const artgal = data[key]
     L.marker(artgal.coords,{
 
