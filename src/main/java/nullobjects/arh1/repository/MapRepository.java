@@ -14,7 +14,7 @@ public class MapRepository implements AutoCloseable {
     MapRepository() {
         try {
             connection = DriverManager.getConnection("jdbc:h2:file:./src/main/resources/static/mapdb", "map_user", "map_password");
-
+            System.out.println(connection);
             try {
                 Statement statement = connection.createStatement();
                 String createTableQuery = """
@@ -27,6 +27,7 @@ public class MapRepository implements AutoCloseable {
                     )
                 """;
                 boolean success = statement.execute(createTableQuery);
+                System.out.println(statement);
                 if (!success) {
                     int updateCount = statement.getUpdateCount();
                     if (updateCount == -1) {
