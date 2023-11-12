@@ -10,6 +10,11 @@ let mapa = new L.map('map', options);
 let layer = new L.TileLayer('https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=2a2a8fb8338646f1bfecaefa5e7de596');
 mapa.addLayer(layer);
 
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(mapa);
+
 mapa.setMaxBounds([
     [42.472,24.082],
     [40.647,19.841],
