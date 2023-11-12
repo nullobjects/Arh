@@ -1,4 +1,4 @@
-![image](https://github.com/nullobjects/Arh1/assets/95441042/c621b721-4d5b-4b6c-9ed9-912142b3105b)
+![finki logo](https://github.com/nullobjects/Arh1/assets/20116149/fd76049e-825d-422d-bcdc-8bf2aec244e2)
 
 <b>Предмет: Дизајн и архитектура на софтвер
 </br>
@@ -13,14 +13,12 @@
 
 <b>Функционални и нефункционални барања</b> [Документ.pdf](https://github.com/nullobjects/Arh1/files/13328656/default.pdf)
 
-![app showcase](https://github.com/nullobjects/Arh1/assets/20116149/dd16c236-778a-4ed6-8b1f-1af26fc77b48)
-<img width="1438" alt="detailedview" src="https://github.com/nullobjects/Arh1/assets/20116149/7918f62a-110f-45f0-813c-acb154b5a3b1">
+![app_showcase_gif](https://github.com/nullobjects/Arh1/assets/20116149/8e092160-5383-44b8-8f68-2652822f4e8d)
+![detailed_view](https://github.com/nullobjects/Arh1/assets/20116149/8677edf5-d9c9-49f7-a1b3-024bbec8a7d3)
 
 How to run:
-1. Press run on ArhApplication [SpringBootApplication]
-   <img width="243" alt="image" src="https://github.com/nullobjects/Arh1/assets/20116149/78920c9e-39b8-41c8-8b72-ac787f7f88e9">
-2. Go to localhost:8080/ (in your browser)
-   <img width="234" alt="image" src="https://github.com/nullobjects/Arh1/assets/20116149/e6c0af3c-0f22-4697-af76-426fa91a5dda">
+1. Press run on ArhApplication [SpringBootApplication] <img width="212" alt="image" src="https://github.com/nullobjects/Arh1/assets/20116149/528a1e3b-5144-46ce-93af-4533bbb06bbc">
+2. Go to localhost:8080/ (in your browser) <img width="210" alt="image" src="https://github.com/nullobjects/Arh1/assets/20116149/0c36f895-ed6d-4b8c-990a-388ba9560ea5">
 
 <b>Членови:</b>
 <ul>
