@@ -16,25 +16,25 @@ public class MapRepository implements AutoCloseable {
             connection = DriverManager.getConnection("jdbc:h2:file:./src/main/resources/static/mapdb", "map_user", "map_password");
             CreateMapMarkerTable();
 
-            InsertMapMarker(new MapMarker("Arte", "Description", "image.url", 41.99491581140953, 21.42130350535809));
-            InsertMapMarker(new MapMarker("Zograf", "Description", "image.url", 41.99730016371808, 21.427663092023362));
-            InsertMapMarker(new MapMarker("Daleria", "Description", "image.url", 42.00195409802084, 21.42461300829461));
-            InsertMapMarker(new MapMarker("Bezi", "Description", "image.url", 41.994670891767875, 21.43045730630835));
-            InsertMapMarker(new MapMarker("Martin", "Description", "image.url", 41.99363045955053, 21.425193531866014));
-            InsertMapMarker(new MapMarker("Mart", "Description", "image.url", 42.01100546381839, 21.40570773620265));
-            InsertMapMarker(new MapMarker("Kol", "Description", "image.url", 41.996086039694575, 21.431969833161013));
-            InsertMapMarker(new MapMarker("Gral", "Description", "image.url", 41.99747568687593, 21.425561383907795));
-            InsertMapMarker(new MapMarker("Pioner", "Description", "image.url", 41.996525459498166, 21.40680432224659));
-            InsertMapMarker(new MapMarker("Mala", "Description", "image.url", 42.002083516549824, 21.42366768038797));
-            InsertMapMarker(new MapMarker("Artida", "Description", "image.url", 41.99934938805174, 21.42391253164884));
-            InsertMapMarker(new MapMarker("Citygal", "Description", "image.url", 41.9975394794109, 21.425443369807002));
-            InsertMapMarker(new MapMarker("D3", "Description", "image.url", 42.00140348595888, 21.412576164042584));
-            InsertMapMarker(new MapMarker("Malstanci", "Description", "image.url", 41.99154778918674, 21.424894254800908));
-            InsertMapMarker(new MapMarker("Anago", "Description", "image.url", 41.99413749653703, 21.41566834950312));
-            InsertMapMarker(new MapMarker("Anju", "Description", "image.url", 41.999952364682294, 21.497607958477726));
-            InsertMapMarker(new MapMarker("Bukefal", "Description", "image.url", 41.114552018256965, 20.80021393874093));
-            InsertMapMarker(new MapMarker("Dudan", "Description", "image.url", 41.110054283305445, 20.805640196713345));
-            InsertMapMarker(new MapMarker("Emanuel", "Description", "image.url", 41.113900756374626, 20.799741633820744));
+            InsertMapMarker(new MapMarker("Arte", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.99491581140953, 21.42130350535809));
+            InsertMapMarker(new MapMarker("Zograf", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.99730016371808, 21.427663092023362));
+            InsertMapMarker(new MapMarker("Daleria", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 42.00195409802084, 21.42461300829461));
+            InsertMapMarker(new MapMarker("Bezi", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.994670891767875, 21.43045730630835));
+            InsertMapMarker(new MapMarker("Martin", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.99363045955053, 21.425193531866014));
+            InsertMapMarker(new MapMarker("Mart", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 42.01100546381839, 21.40570773620265));
+            InsertMapMarker(new MapMarker("Kol", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.996086039694575, 21.431969833161013));
+            InsertMapMarker(new MapMarker("Gral", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.99747568687593, 21.425561383907795));
+            InsertMapMarker(new MapMarker("Pioner", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.996525459498166, 21.40680432224659));
+            InsertMapMarker(new MapMarker("Mala", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 42.002083516549824, 21.42366768038797));
+            InsertMapMarker(new MapMarker("Artida", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.99934938805174, 21.42391253164884));
+            InsertMapMarker(new MapMarker("Citygal", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.9975394794109, 21.425443369807002));
+            InsertMapMarker(new MapMarker("D3", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 42.00140348595888, 21.412576164042584));
+            InsertMapMarker(new MapMarker("Malstanci", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.99154778918674, 21.424894254800908));
+            InsertMapMarker(new MapMarker("Anago", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.99413749653703, 21.41566834950312));
+            InsertMapMarker(new MapMarker("Anju", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.999952364682294, 21.497607958477726));
+            InsertMapMarker(new MapMarker("Bukefal", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.114552018256965, 20.80021393874093));
+            InsertMapMarker(new MapMarker("Dudan", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.110054283305445, 20.805640196713345));
+            InsertMapMarker(new MapMarker("Emanuel", "Description", "/images/326554246_606384704828028_7636741843512573046_n.jpg", 41.113900756374626, 20.799741633820744));
         } catch (SQLException e) {
             throw new RuntimeException("Failed to establish a database connection.", e);
         }
