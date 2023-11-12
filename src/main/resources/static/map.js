@@ -21,8 +21,8 @@ mapa.setMaxBounds([
 ]);
 
 var img = document.createElement('img');
-img.width = 200;
-img.height = 200;
+img.width = 100;
+img.height = 100;
 
 let mapMarkers = {};
 fetch("http://localhost:8080/api/GetMarkers")
@@ -42,7 +42,7 @@ fetch("http://localhost:8080/api/GetMarkers")
 
             }).addTo(mapa);
             img.src = artgal.image_url;
-            marker.bindPopup(artgal.name + '\n' + artgal.description + img.outerHTML);
+            marker.bindPopup(artgal.name + "<br>" + artgal.description + "<br>" + img.outerHTML);
         }
     })
     .catch(error => {
