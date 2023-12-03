@@ -15,6 +15,7 @@
 
 ![app_showcase_gif](https://github.com/nullobjects/Arh1/assets/20116149/8e092160-5383-44b8-8f68-2652822f4e8d)
 ![detailed_view](https://github.com/nullobjects/Arh1/assets/20116149/8677edf5-d9c9-49f7-a1b3-024bbec8a7d3)
+<img width="563" alt="image" src="https://github.com/nullobjects/Arh1/assets/20116149/acd739bd-992e-4ec9-be0e-cb19e03e0aa2">
 
 How to run:
 1. Press run on ArhApplication [SpringBootApplication] <img width="212" alt="image" src="https://github.com/nullobjects/Arh1/assets/20116149/528a1e3b-5144-46ce-93af-4533bbb06bbc">
