@@ -24,7 +24,20 @@
     <nav>
         <ul>
             <li id="logo2"><a href="#0">NULLOBJECTS</a></li>
-            <li><a href="#0">SEARCH</a></li>
+            <li>
+                <a href="#0" id="searchLink">SEARCH</a>
+                <ul>
+                    <div id="myOverlay" class="overlay">
+                        <div class="overlay-content">
+                            <form id="searchForm">
+                                <input id="searchText" type="text" placeholder="Search.." name="search">
+                                <button type="submit"><i class="search_button" onclick="searchMarkers(document.getElementById(
+                                    'searchText').innerText)"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </ul>
+            </li>
             <li><a href="#0">FILTER</a></li>
             <li>
                 <a href="#0">CONTRIBUTE</a>

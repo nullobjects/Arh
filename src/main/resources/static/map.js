@@ -54,3 +54,30 @@ fetch("http://localhost:8080/api/GetMarkers")
     .catch(error => {
         console.error("Couldn't get the map markers:", error);
     });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    function handleKeyPress(event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            const searchQuery = document.getElementById('searchText').value;
+            searchMarkers(searchQuery);
+        }
+    }
+    document.getElementById('searchText').addEventListener('keypress', handleKeyPress);
+});
+
+let map;
+let allMarkers = [];
+function searchMarkers(name) {
+        const searchQuery = name;
+        fetch('/search?searchQuery=' + searchQuery)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                allMarkers.forEach(marker => {
+                    marker.setMap(null);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    }

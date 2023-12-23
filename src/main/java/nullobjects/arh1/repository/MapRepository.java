@@ -147,4 +147,32 @@ public class MapRepository implements AutoCloseable {
             e.printStackTrace();
         }
     }
+    public List<MapMarker> searchMarkersByName(String searchQuery) {
+        List<MapMarker> matchingMarkers = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE UPPER(\"NAME\") LIKE ?");
+            statement.setString(1, "%" + searchQuery.toUpperCase() + "%");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String name = resultSet.getString("NAME");
+                String description = resultSet.getString("DESCRIPTION");
+                String imageUrl = resultSet.getString("IMAGE_URL");
+                double xCoord = resultSet.getDouble("X_COORD");
+                double yCoord = resultSet.getDouble("Y_COORD");
+
+                MapMarker mapMarker = new MapMarker(name, description, imageUrl, xCoord, yCoord);
+                matchingMarkers.add(mapMarker);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return matchingMarkers;
+    }
 }
+

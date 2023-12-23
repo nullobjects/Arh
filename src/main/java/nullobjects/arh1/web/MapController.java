@@ -4,16 +4,20 @@ import nullobjects.arh1.model.MapMarker;
 import nullobjects.arh1.service.MapService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import nullobjects.arh1.repository.MapRepository;
 
 import java.util.List;
 
 @RestController
 public class MapController {
+    private final MapRepository mapRepository;
     private MapService mapService;
 
-    MapController(MapService mapService) {
+    MapController(MapRepository mapRepository, MapService mapService) {
+        this.mapRepository = mapRepository;
         this.mapService = mapService;
     }
 
@@ -36,6 +40,10 @@ public class MapController {
         return "add_gal";
     }
 
+    @GetMapping("/search")
+    public List<MapMarker> searchMarkersByName(@RequestParam String searchQuery) {
+        return mapRepository.searchMarkersByName(searchQuery);
+    }
    
 
 }
