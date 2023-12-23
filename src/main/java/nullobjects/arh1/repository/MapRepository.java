@@ -147,4 +147,9 @@ public class MapRepository implements AutoCloseable {
             e.printStackTrace();
         }
     }
+
+    public String findByName(String name){
+        return getAllMarkers().stream().filter(n -> n.getName().equals(name)).toString();
+    }
+
 }
