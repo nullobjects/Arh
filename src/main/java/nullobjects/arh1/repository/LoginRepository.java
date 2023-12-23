@@ -22,11 +22,11 @@ public class LoginRepository {
         try {
             Statement statement = connection.createStatement();
             statement.execute("""
-            CREATE TABLE IF NOT EXISTS PUBLIC.USERS (
-                "username" VARCHAR(32) PRIMARY KEY,
-                "password" VARCHAR(32)
-            )
-        """);
+                CREATE TABLE IF NOT EXISTS PUBLIC.USERS (
+                    "USERNAME" VARCHAR(32) PRIMARY KEY,
+                    "PASSWORD" VARCHAR(32)
+                )
+            """);
             statement.close();
 
             connection.commit();
@@ -36,7 +36,7 @@ public class LoginRepository {
     }
 
     public boolean RegisterUser(User user) {
-        String query = "INSERT INTO PUBLIC.USERS (username, password) VALUES (?, ?)";
+        String query = "INSERT INTO PUBLIC.USERS (USERNAME, PASSWORD) VALUES (?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, user.getUsername());
@@ -44,18 +44,16 @@ public class LoginRepository {
 
             int rowsAffected = preparedStatement.executeUpdate();
 
-            // Assuming you want to return true if at least one row was affected
             return rowsAffected > 0;
-
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception appropriately
+            e.printStackTrace();
             return false;
         }
     }
 
     public User GetUserByUserName(String username) {
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT password FROM PUBLIC.USERS")) {
+             ResultSet resultSet = statement.executeQuery("SELECT PASSWORD FROM PUBLIC.USERS")) {
 
             if (resultSet.next()) {
                 return new User(username, resultSet.getString("password"));
