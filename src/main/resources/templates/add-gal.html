@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/add_gal}">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required placeholder="Name">
+    <label for="dis">Discription:</label>
+    <input type="text" id="dis" required placeholder="Discription">
+    <label for="imag">Image URL</label>
+    <input type="url" id="imag" required placeholder="Image URL">
+    <label for="x-cord">X-Cord</label>
+    <input type="number" id="x-cord" required placeholder="X-Cord">
+    <label for="y-cord">Y-Cord</label>
+    <input type="number" id="y-cord" required placeholder="Y_Cord">
+</form>
+
+</body>
+</html>
