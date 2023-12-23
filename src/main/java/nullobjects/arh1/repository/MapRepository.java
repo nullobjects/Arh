@@ -48,11 +48,11 @@ public class MapRepository implements AutoCloseable {
             Statement statement = connection.createStatement();
             statement.execute("""
                     CREATE TABLE IF NOT EXISTS PUBLIC.MAP_TRACKERS (
-                        "name" VARCHAR(255) PRIMARY KEY,
-                        "description" TEXT,
-                        "image_url" TEXT,
-                        "x_coord" DOUBLE,
-                        "y_coord" DOUBLE
+                        "NAME" VARCHAR(255) PRIMARY KEY,
+                        "DESCRIPTION" TEXT,
+                        "IMAGE_URL" TEXT,
+                        "X_COORD" DOUBLE,
+                        "Y_COORD" DOUBLE
                     )
                 """);
             statement.close();
@@ -67,27 +67,27 @@ public class MapRepository implements AutoCloseable {
         try {
             PreparedStatement statement = connection.prepareStatement("""
                 MERGE INTO PUBLIC.MAP_TRACKERS t
-                USING (VALUES (?, ?, ?, ?, ?)) v ("name", "description", "image_url", "x_coord", "y_coord")
-                ON t."name" = v."name"
+                USING (VALUES (?, ?, ?, ?, ?)) v ("NAME", "DESCRIPTION", "IMAGE_URL", "X_COORD", "Y_COORD")
+                ON t."NAME" = v."NAME"
                 WHEN MATCHED THEN
                     UPDATE SET
-                        "description" = v."description",
-                        "image_url" = v."image_url",
-                        "x_coord" = v."x_coord",
-                        "y_coord" = v."y_coord"
+                        "DESCRIPTION" = v."DESCRIPTION",
+                        "IMAGE_URL" = v."IMAGE_URL",
+                        "X_COORD" = v."X_COORD",
+                        "Y_COORD" = v."Y_COORD"
                 WHEN NOT MATCHED THEN
                     INSERT (
-                        "name",
-                        "description",
-                        "image_url",
-                        "x_coord",
-                        "y_coord"
+                        "NAME",
+                        "DESCRIPTION",
+                        "IMAGE_URL",
+                        "X_COORD",
+                        "Y_COORD"
                     ) VALUES (
-                        v."name",
-                        v."description",
-                        v."image_url",
-                        v."x_coord",
-                        v."y_coord"
+                        v."NAME",
+                        v."DESCRIPTION",
+                        v."IMAGE_URL",
+                        v."X_COORD",
+                        v."Y_COORD"
                     )
             """);
             statement.setString(1, mapMarker.getName());
@@ -117,12 +117,12 @@ public class MapRepository implements AutoCloseable {
              ResultSet resultSet = statement.executeQuery("SELECT * FROM PUBLIC.MAP_TRACKERS")) {
 
             while (resultSet.next()) {
-                String name = resultSet.getString("name");
+                String name = resultSet.getString("NAME");
                 name = pipe1.runFilters(name);
-                String description = resultSet.getString("description");
-                String imageUrl = resultSet.getString("image_url");
-                double xCoord = resultSet.getDouble("x_coord");
-                double yCoord = resultSet.getDouble("y_coord");
+                String description = resultSet.getString("DESCRIPTION");
+                String imageUrl = resultSet.getString("IMAGE_URL");
+                double xCoord = resultSet.getDouble("X_COORD");
+                double yCoord = resultSet.getDouble("Y_COORD");
 
                 MapMarker mapMarker = new MapMarker(name, description, imageUrl, xCoord, yCoord);
                 mapMarker = pipe2.runFilters(mapMarker);
