@@ -171,23 +171,35 @@ public class MapRepository implements AutoCloseable {
             e.printStackTrace();
         }
     }
-    public List<MapMarker> searchMarkersByName(String searchQuery) {
-        List<MapMarker> matchingMarkers = new ArrayList<>();
+    public MapMarker searchMarkersByName(String name) {
+        Pipe<String> pipe1 = new Pipe<>();
+        pipe1.addFilter(new UppercaseFilter());
 
+        Pipe<MapMarker> pipe2 = new Pipe<>();
+        pipe2.addFilter(new MarkerValidationFilter());
+        
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE UPPER(\"NAME\") LIKE ?");
-            statement.setString(1, "%" + searchQuery.toUpperCase() + "%");
-            ResultSet resultSet = statement.executeQuery();
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE NAME = ?");
+            statement.setString(1, name);
 
-            while (resultSet.next()) {
-                String name = resultSet.getString("NAME");
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                name = pipe1.runFilters(name);
                 String description = resultSet.getString("DESCRIPTION");
+                String city = resultSet.getString("CITY");
                 String imageUrl = resultSet.getString("IMAGE_URL");
+                Double review = resultSet.getDouble("REVIEW");
+                Integer working_start = resultSet.getInt("WORKING_START");
+                Integer working_end = resultSet.getInt("WORKING_END");
                 double xCoord = resultSet.getDouble("X_COORD");
                 double yCoord = resultSet.getDouble("Y_COORD");
 
-                MapMarker mapMarker = new MapMarker(name, description, imageUrl, xCoord, yCoord);
-                matchingMarkers.add(mapMarker);
+                MapMarker mapMarker = new MapMarker(name, description, city, imageUrl, review, working_start, working_end, xCoord, yCoord);
+                mapMarker = pipe2.runFilters(mapMarker);
+
+                resultSet.close();
+                statement.close();
+                return mapMarker;
             }
 
             resultSet.close();
@@ -196,7 +208,7 @@ public class MapRepository implements AutoCloseable {
             e.printStackTrace();
         }
 
-        return matchingMarkers;
+        return null;
     }
 }
 

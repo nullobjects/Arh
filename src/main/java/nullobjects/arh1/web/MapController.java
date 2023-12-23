@@ -4,6 +4,7 @@ import nullobjects.arh1.model.MapMarker;
 import nullobjects.arh1.service.MapService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,11 +14,9 @@ import java.util.List;
 
 @RestController
 public class MapController {
-    private final MapRepository mapRepository;
     private MapService mapService;
 
-    MapController(MapRepository mapRepository, MapService mapService) {
-        this.mapRepository = mapRepository;
+    MapController(MapService mapService) {
         this.mapService = mapService;
     }
 
@@ -37,13 +36,22 @@ public class MapController {
     @GetMapping("/add-gal")
     public String addGal(Model model){
         model.addAttribute("marker",mapService.getAllMarkers());
-        return "add_gal";
+        return "add-gal";
+    }
+
+    @GetMapping("/edit/{name}")
+    public String edit(@PathVariable String name, Model model){
+        if(mapService.searchMarkersByName(name) != null){
+            MapMarker mapMarker = mapService.searchMarkersByName(name);
+            model.addAttribute("mapName",mapMarker.getName());
+            model.addAttribute("marker",mapService.getAllMarkers());
+            return "edit-gal";
+        }
+        return "error";
     }
 
     @GetMapping("/search")
-    public List<MapMarker> searchMarkersByName(@RequestParam String searchQuery) {
-        return mapRepository.searchMarkersByName(searchQuery);
+    public MapMarker searchMarkersByName(@RequestParam String name) {
+        return mapService.searchMarkersByName(name);
     }
-   
-
 }
