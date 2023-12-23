@@ -70,14 +70,13 @@ document.addEventListener('DOMContentLoaded', function() {
 let map;
 let allMarkers = [];
 function searchMarkers(name) {
-        const searchQuery = name;
-        fetch('/search?searchQuery=' + searchQuery)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                allMarkers.forEach(marker => {
-                    marker.setMap(null);
-                });
-            })
-            .catch(error => console.error('Error:', error));
-    }
+    fetch('/search?name=' + name)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            allMarkers.forEach(marker => {
+                marker.setMap(null);
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}

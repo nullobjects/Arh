@@ -179,8 +179,8 @@ public class MapRepository implements AutoCloseable {
         pipe2.addFilter(new MarkerValidationFilter());
 
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE NAME = ?");
-            statement.setString(1, name);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE UPPER(NAME) LIKE ?");
+            statement.setString(1, "%" + name.toUpperCase() + "%");
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -196,7 +196,6 @@ public class MapRepository implements AutoCloseable {
 
                 MapMarker mapMarker = new MapMarker(name, description, city, imageUrl, review, working_start, working_end, xCoord, yCoord);
                 mapMarker = pipe2.runFilters(mapMarker);
-
                 resultSet.close();
                 statement.close();
                 return mapMarker;
