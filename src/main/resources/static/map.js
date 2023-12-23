@@ -42,7 +42,13 @@ fetch("http://localhost:8080/api/GetMarkers")
 
             }).addTo(mapa);
             img.src = artgal.image_url;
-            marker.bindPopup(artgal.name + "<br>" + artgal.description + "<br>" + img.outerHTML);
+            marker.bindPopup(artgal.name + "<br>" + artgal.description + "<br>" + img.outerHTML + "<br>" +
+                "<a class=\"twitter-share-button\"\n" +
+                "href=\"https://twitter.com/intent/tweet?text=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here:%20http://localhost:8080/\"\n" +
+                "data-size=\"large\">\n" + "Tweet" + "</a>" +
+                "<div class=\"fb-share-button\" data-href=\"https://github.com/nullobjects/Arh\" data-layout=\"\" data-size=\"\">" +
+                "<a target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgithub.com%2Fnullobjects%2FArh&amp;quote=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here%3A\" class=\"fb-xfbml-parse-ignore\">Share</a>" +
+                "</div>");
         }
     })
     .catch(error => {
