@@ -37,6 +37,10 @@ public class LoginController {
 
     @PostMapping("/register")
     public String RegisterUser(@RequestParam String username, @RequestParam String password, @RequestParam String confirm_password) {
+        if (!password.equals(confirm_password)) {
+            return "redirect:/register";
+        }
+
         loginService.RegisterUser(username, password);
         return "redirect:/register/login";
     }
