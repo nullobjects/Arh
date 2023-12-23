@@ -64,4 +64,22 @@ public class LoginRepository {
 
         return null;
     }
+
+    public boolean LoginUser(User user) {
+        String query = "SELECT '1' FROM PUBLIC.USERS WHERE USERNAME = ? AND PASSWORD = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                // If there is at least one row in the result set, the login is successful
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle or log the exception as needed
+        }
+
+        return false;
+    }
 }

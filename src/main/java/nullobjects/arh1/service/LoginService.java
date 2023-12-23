@@ -20,4 +20,8 @@ public class LoginService {
 
         return loginRepository.RegisterUser(new User(username, password));
     }
+
+    public boolean LoginUser(String username, String password) {
+        return loginRepository.LoginUser(new User(username, password));
+    }
 }

@@ -23,6 +23,14 @@ public class LoginController {
         return modelAndView;
     }
 
+    @PostMapping
+    public String LoginUser(@RequestParam String username, @RequestParam String password) {
+        if (loginService.LoginUser(username, password)) {
+            return "redirech:/";
+        }
+        return "redirect:/login";
+    }
+
     @PostMapping("/register_redirect")
     public String RegisterUser() {
         return "redirect:/login/register";
