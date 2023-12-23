@@ -171,7 +171,7 @@ public class MapRepository implements AutoCloseable {
             e.printStackTrace();
         }
     }
-    public MapMarker findMarkerByName(String name) {
+    public MapMarker findMarkerByName(String markerName) {
         Pipe<String> pipe1 = new Pipe<>();
         pipe1.addFilter(new UppercaseFilter());
 
@@ -180,10 +180,11 @@ public class MapRepository implements AutoCloseable {
 
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE UPPER(NAME) LIKE ?");
-            statement.setString(1, "%" + name.toUpperCase() + "%");
+            statement.setString(1, "%" + markerName.toUpperCase() + "%");
 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
+                String name = resultSet.getString("NAME");
                 name = pipe1.runFilters(name);
                 String description = resultSet.getString("DESCRIPTION");
                 String city = resultSet.getString("CITY");

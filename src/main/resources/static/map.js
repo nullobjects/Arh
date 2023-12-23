@@ -25,6 +25,7 @@ img.width = 100;
 img.height = 100;
 
 let mapMarkers = {};
+let mapMarkerCount = 0;
 fetch("http://localhost:8080/api/GetMarkers")
     .then(response => {
         if (!response.ok) {
@@ -34,8 +35,8 @@ fetch("http://localhost:8080/api/GetMarkers")
         return response.json();
     })
     .then(data => {
-        mapMarkers = data;
-
+        mapMarkers = {}
+        mapMarkerCount = 0;
         for (let key in data){
             const artgal = data[key]
             let marker = L.marker([artgal.x_coord, artgal.y_coord],{
@@ -49,6 +50,9 @@ fetch("http://localhost:8080/api/GetMarkers")
                 "<div class=\"fb-share-button\" data-href=\"https://github.com/nullobjects/Arh\" data-layout=\"\" data-size=\"\">" +
                 "<a target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgithub.com%2Fnullobjects%2FArh&amp;quote=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here%3A\" class=\"fb-xfbml-parse-ignore\">Share</a>" +
                 "</div>");
+            marker.name = artgal.name;
+            mapMarkers[mapMarkerCount] = marker;
+            mapMarkerCount = mapMarkerCount + 1
         }
     })
     .catch(error => {
@@ -67,16 +71,19 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchText').addEventListener('keypress', handleKeyPress);
 });
 
-let map;
-let allMarkers = [];
 function searchMarkers(name) {
     fetch('/search?name=' + name)
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            allMarkers.forEach(marker => {
-                marker.setMap(null);
-            });
+            console.log(mapMarkers)
+            for (let i = 0; i < mapMarkerCount; i++) {
+                let marker = mapMarkers[i];
+                if (marker.name != data.name) {
+                    mapa.removeLayer(marker);
+                }
+                // marker.addTo(map);
+            }
         })
         .catch(error => console.error('Error:', error));
 }
