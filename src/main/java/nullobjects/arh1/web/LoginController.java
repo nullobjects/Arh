@@ -26,7 +26,7 @@ public class LoginController {
     @PostMapping
     public String LoginUser(@RequestParam String username, @RequestParam String password) {
         if (loginService.LoginUser(username, password)) {
-            return "redirech:/";
+            return "redirect:/";
         }
         return "redirect:/login";
     }

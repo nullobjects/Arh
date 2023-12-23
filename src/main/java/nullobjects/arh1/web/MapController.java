@@ -2,6 +2,7 @@ package nullobjects.arh1.web;
 
 import nullobjects.arh1.model.MapMarker;
 import nullobjects.arh1.service.MapService;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +13,7 @@ import nullobjects.arh1.repository.MapRepository;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class MapController {
     private MapService mapService;
 
@@ -33,10 +34,10 @@ public class MapController {
         return mapMarkers;
     }
 
-    @GetMapping("/add-gal")
+    @GetMapping("/add_gal")
     public String addGal(Model model){
-        model.addAttribute("marker",mapService.getAllMarkers());
-        return "add-gal";
+        //model.addAttribute("marker",mapService.getAllMarkers());
+        return "add_gal";
     }
 
     @GetMapping("/edit/{name}")
