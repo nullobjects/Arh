@@ -16,7 +16,7 @@ public class MapService {
     public List<MapMarker> getAllMarkers() {
         return mapRepository.getAllMarkers();
     }
-    public MapMarker searchMarkersByName(String name) {
-        return mapRepository.searchMarkersByName(name);
+    public MapMarker findMarkerByName(String name) {
+        return mapRepository.findMarkerByName(name);
     }
 }

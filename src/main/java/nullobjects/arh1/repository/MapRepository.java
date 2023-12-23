@@ -171,13 +171,13 @@ public class MapRepository implements AutoCloseable {
             e.printStackTrace();
         }
     }
-    public MapMarker searchMarkersByName(String name) {
+    public MapMarker findMarkerByName(String name) {
         Pipe<String> pipe1 = new Pipe<>();
         pipe1.addFilter(new UppercaseFilter());
 
         Pipe<MapMarker> pipe2 = new Pipe<>();
         pipe2.addFilter(new MarkerValidationFilter());
-        
+
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE NAME = ?");
             statement.setString(1, name);

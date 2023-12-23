@@ -41,8 +41,8 @@ public class MapController {
 
     @GetMapping("/edit/{name}")
     public String edit(@PathVariable String name, Model model){
-        if(mapService.searchMarkersByName(name) != null){
-            MapMarker mapMarker = mapService.searchMarkersByName(name);
+        if(mapService.findMarkerByName(name) != null){
+            MapMarker mapMarker = mapService.findMarkerByName(name);
             model.addAttribute("mapName",mapMarker.getName());
             model.addAttribute("marker",mapService.getAllMarkers());
             return "edit-gal";
@@ -52,6 +52,6 @@ public class MapController {
 
     @GetMapping("/search")
     public MapMarker searchMarkersByName(@RequestParam String name) {
-        return mapService.searchMarkersByName(name);
+        return mapService.findMarkerByName(name);
     }
 }
