@@ -65,46 +65,7 @@ fetch("http://localhost:8080/api/GetMarkers")
                 "<div class=\"fb-share-button\" data-href=\"https://github.com/nullobjects/Arh\" data-layout=\"\" data-size=\"\">" +
                 "<a target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgithub.com%2Fnullobjects%2FArh&amp;quote=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here%3A\" class=\"fb-xfbml-parse-ignore\">Share</a>" +
                 "</div>" +
-                "<br>" + commentForm + "<br>" + "<div class=\"container\">\n" +
-                "  <div class=\"container__items\">\n" +
-                "    <input type=\"radio\" name=\"stars\" id=\"st5\">\n" +
-                "    <label for=\"st5\">\n" +
-                "      <div class=\"star-stroke\">\n" +
-                "        <div class=\"star-fill\"></div>\n" +
-                "      </div>\n" +
-                "      <div class=\"label-description\" data-content=\"\"></div>\n" +
-                "    </label>\n" +
-                "    <input type=\"radio\" name=\"stars\" id=\"st4\">\n" +
-                "    <label for=\"st4\">\n" +
-                "      <div class=\"star-stroke\">\n" +
-                "        <div class=\"star-fill\"></div>\n" +
-                "      </div>\n" +
-                "      <div class=\"label-description\" data-content=\"\"></div>\n" +
-                "    </label>\n" +
-                "    <input type=\"radio\" name=\"stars\" id=\"st3\">\n" +
-                "    <label for=\"st3\">\n" +
-                "      <div class=\"star-stroke\">\n" +
-                "        <div class=\"star-fill\"></div>\n" +
-                "      </div>\n" +
-                "      <div class=\"label-description\" data-content=\"\"></div>\n" +
-                "    </label>\n" +
-                "    <input type=\"radio\" name=\"stars\" id=\"st2\">\n" +
-                "    <label for=\"st2\">\n" +
-                "      <div class=\"star-stroke\">\n" +
-                "        <div class=\"star-fill\"></div>\n" +
-                "      </div>\n" +
-                "      <div class=\"label-description\" data-content=\"\"></div>\n" +
-                "    </label>\n" +
-                "    <input type=\"radio\" name=\"stars\" id=\"st1\">\n" +
-                "    <label for=\"st1\">\n" +
-                "      <div class=\"star-stroke\">\n" +
-                "        <div class=\"star-fill\"></div>\n" +
-                "      </div>\n" +
-                "      \n" +
-                "      <div class=\"label-description\" data-content=\"\"></div>\n" +
-                "    </label>\n" +
-                "  </div>\n" +
-                "</div>")
+                "<br>" + commentForm)
             mapMarkers[mapMarkerCount] = marker;
             mapMarkerCount = mapMarkerCount + 1;
             originalMarkers.push(marker);
