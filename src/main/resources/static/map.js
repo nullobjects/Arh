@@ -106,5 +106,20 @@ function searchMarkers(name) {
 }
 
 function CityFilter(city){
-
+    fetch('/city?name=' + city)
+        .then(response => response.json())
+        .then(data => {
+            let found = false;
+            for (let i = 0; i < originalMarkers.length; i++) {
+                let marker = originalMarkers[i];
+                if (marker.city === data.city) {
+                    found = true;
+                } else {
+                    mapa.removeLayer(marker);
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }

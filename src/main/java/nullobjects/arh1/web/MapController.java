@@ -66,5 +66,5 @@ public class MapController {
 
     @GetMapping("/city")
     @ResponseBody
-    public MapMarker searchMarkersByCity(@RequestParam String city){ return mapService.findMarkerByCity(city);}
+    public MapMarker searchMarkersByCity(@RequestParam String name){ return mapService.findMarkerByCity(name);}
 }
