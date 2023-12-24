@@ -33,11 +33,7 @@ public class MapController {
     @GetMapping("/api/GetMarkers")
     @ResponseBody
     public List<MapMarker> GetMarkers() {
-        List<MapMarker> markers = mapService.getAllMarkers();
-        ArrayList<String> a = new ArrayList<>();
-        a.add("hello please");
-        markers.get(0).setComments(a);
-        return markers;
+        return mapService.getAllMarkers();
     }
 
     @GetMapping("/add_gal")
