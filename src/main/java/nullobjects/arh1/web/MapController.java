@@ -54,11 +54,16 @@ public class MapController {
     }
 
 
-    @GetMapping("/delete_gal/{name}")
-    public String deleteGal(@PathVariable String name,Model model){
-        mapService.delete(name);
-        model.addAttribute("marker",mapService.getAllMarkers());
+    @GetMapping("/delete_gal")
+    public String DeletePage(Model model) {
+        model.addAttribute("markers", mapService.getAllMarkers());
         return "delete_gal";
+    }
+
+    @PostMapping("/delete_gal")
+    public String deleteGal(@RequestParam String name, Model model){
+        mapService.delete(name);
+        return "redirect:/";
     }
 
     @GetMapping("/search")
@@ -69,9 +74,13 @@ public class MapController {
 
     @GetMapping("/city")
     @ResponseBody
-    public MapMarker searchMarkersByCity(@RequestParam String name){ return mapService.findMarkerByCity(name);}
+    public MapMarker searchMarkersByCity(@RequestParam String name) {
+        return mapService.findMarkerByCity(name);
+    }
 
     @GetMapping("/api/GetUsers")
     @ResponseBody
-    public List<User> GetUsers() {return loginService.getUsers();}
+    public List<User> GetUsers() {
+        return loginService.getUsers();
+    }
 }

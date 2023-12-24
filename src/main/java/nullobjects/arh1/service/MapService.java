@@ -20,11 +20,13 @@ public class MapService {
     public MapMarker findMarkerByName(String name) {
         return mapRepository.findMarkerByName(name);
     }
-    public void delete(String name){
-        mapRepository.delete(name);
+    public boolean delete(String name) {
+        return mapRepository.delete(name);
     }
 
-    public MapMarker findMarkerByCity(String city){ return mapRepository.findMarkerByCity(city);}
+    public MapMarker findMarkerByCity(String city) {
+        return mapRepository.findMarkerByCity(city);
+    }
 
     public void add(String name,String disc,String city,String image,int start,int end,double x,double y){
         mapRepository.add(name, disc, city, image, start, end, x, y);

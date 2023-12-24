@@ -100,10 +100,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function searchMarkers(name) {
-            let found=false;
+            let found= false;
             for (let i = 0; i < originalMarkers.length; i++) {
                 let marker = originalMarkers[i];
-                if (marker.name === name.toUpperCase()) {
+                if (marker.name.includes(name)) {
                     found = true;
                 } else {
                     mapa.removeLayer(marker);

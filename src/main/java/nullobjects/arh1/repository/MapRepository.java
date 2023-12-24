@@ -138,7 +138,7 @@ public class MapRepository implements AutoCloseable {
 
             while (resultSet.next()) {
                 String name = resultSet.getString("NAME");
-                name = pipe1.runFilters(name);
+                //name = pipe1.runFilters(name);
                 String description = resultSet.getString("DESCRIPTION");
                 String city = resultSet.getString("CITY");
                 String imageUrl = resultSet.getString("IMAGE_URL");
@@ -185,7 +185,7 @@ public class MapRepository implements AutoCloseable {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String name = resultSet.getString("NAME");
-                name = pipe1.runFilters(name);
+                //name = pipe1.runFilters(name);
                 String description = resultSet.getString("DESCRIPTION");
                 String city = resultSet.getString("CITY");
                 String imageUrl = resultSet.getString("IMAGE_URL");
@@ -211,8 +211,19 @@ public class MapRepository implements AutoCloseable {
         return null;
     }
 
-    public void delete(String name){
-        getAllMarkers().remove(name);
+    public boolean delete(String name) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM PUBLIC.MAP_TRACKERS WHERE NAME = ?");
+            statement.setString(1, name);
+            int rowsAffected = statement.executeUpdate();
+            System.out.println(rowsAffected);
+            statement.close();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 
@@ -230,7 +241,7 @@ public class MapRepository implements AutoCloseable {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String name = resultSet.getString("NAME");
-                name = pipe1.runFilters(name);
+                //name = pipe1.runFilters(name);
                 String description = resultSet.getString("DESCRIPTION");
                 String city = resultSet.getString("CITY");
                 String imageUrl = resultSet.getString("IMAGE_URL");
