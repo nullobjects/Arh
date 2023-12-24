@@ -50,8 +50,13 @@
                     <li><a href=delete_gal>REMOVE GALLERIES</a></li>
                 </ul>
             </li>
-            <li><a href="https://github.com/nullobjects/Arh">GITHUB</a></li>
-            <li><a href="">LOGIN</a></li>
+            <li><a href="https://github.com/nullobjects/Arh">GITHUB</a> </li>
+            <li><a id="login">LOGIN</a><script>
+                document.getElementById("login").addEventListener("click", function(event) {
+                    event.preventDefault();
+                    window.location.href = "/login";
+                });
+            </script></li>
         </ul>
     </nav>
     </body>
