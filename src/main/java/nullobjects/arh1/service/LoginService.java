@@ -7,6 +7,8 @@ import nullobjects.arh1.model.exceptions.UsernameTooShortException;
 import nullobjects.arh1.repository.LoginRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LoginService {
     private LoginRepository loginRepository;
@@ -31,4 +33,6 @@ public class LoginService {
     public User GetUserByUserName(String username) {
         return loginRepository.GetUserByUserName(username);
     }
+
+    public List<User> getUsers(){return loginRepository.getUsers();}
 }

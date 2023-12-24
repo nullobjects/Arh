@@ -10,6 +10,7 @@ let mapa = new L.map('map', options);
 let layer = new L.TileLayer('https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=2a2a8fb8338646f1bfecaefa5e7de596');
 mapa.addLayer(layer);
 let originalMarkers = [];
+let markerComments = {};
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -43,18 +44,33 @@ fetch("http://localhost:8080/api/GetMarkers")
             const artgal = data[key]
             let marker = L.marker([artgal.x_coord, artgal.y_coord], {});
             img.src = artgal.image_url;
+
+            let commentForm = `
+                <div id="commentForm">
+                    <form onsubmit="event.preventDefault(); updateMarkerComment()">
+                        <div>
+                            <a class="comment">Add a comment:</a><br>
+                            <textarea id="markerComment" style="font-family:sans-serif;font-size:1.2em;" placeholder="How would you describe this place?"></textarea>
+                        </div>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+            `;
+
             marker.bindPopup(artgal.name + "<br>" + artgal.description + "<br>" + img.outerHTML + "<br>" +
                 "<a class=\"twitter-share-button\"\n" +
                 "href=\"https://twitter.com/intent/tweet?text=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here:%20http://localhost:8080/\"\n" +
                 "data-size=\"large\">\n" + "Tweet" + "</a>" +
                 "<div class=\"fb-share-button\" data-href=\"https://github.com/nullobjects/Arh\" data-layout=\"\" data-size=\"\">" +
                 "<a target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgithub.com%2Fnullobjects%2FArh&amp;quote=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here%3A\" class=\"fb-xfbml-parse-ignore\">Share</a>" +
-                "</div>");
+                "</div>" +
+                "<br>" + commentForm)
             marker.name = artgal.name;
             marker.city = artgal.city;
             mapMarkers[mapMarkerCount] = marker;
-            mapMarkerCount = mapMarkerCount + 1
+            mapMarkerCount = mapMarkerCount + 1;
             originalMarkers.push(marker);
+            markerComments[artgal.name] = "";
         }
         originalMarkers.forEach(marker => {
             marker.addTo(mapa);
@@ -74,18 +90,17 @@ document.addEventListener('DOMContentLoaded', function() {
             let searchQuery = document.getElementById('searchText').value;
             if (searchQuery.trim() !== ""){
             searchMarkers(searchQuery)
-                console.log(searchQuery);
             } else {
-                console.log("empty")
+                console.log("Empty search")
             }
         }
     }
+
     document.getElementById('searchText').addEventListener('keypress', handleKeyPress);
 });
 
 function searchMarkers(name) {
             let found=false;
-            console.log(found)
             for (let i = 0; i < originalMarkers.length; i++) {
                 let marker = originalMarkers[i];
                 if (marker.name === name.toUpperCase()) {
@@ -111,8 +126,15 @@ function CityFilter(city){
                 let marker = originalMarkers[i];
                 if (marker.city !== city)
                 {
-                    console.log(marker.city + ":" + city);
                     mapa.removeLayer(marker);
                 }
             }
 }
+
+/*
+function updateMarkerComment() {
+    let commentText = document.getElementById('markerComment').value;
+    let markerName =
+    mapa.closePopup();
+}
+ */

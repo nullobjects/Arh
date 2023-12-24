@@ -5,6 +5,8 @@ import nullobjects.arh1.model.exceptions.UsernameExistsException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class LoginRepository {
@@ -96,5 +98,22 @@ public class LoginRepository {
         }
 
         return false;
+    }
+
+    public List<User> getUsers() {
+        List<User> userList = new ArrayList<>();
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("SELECT * FROM PUBLIC.USERS")) {
+
+            while (resultSet.next()) {
+                String username = resultSet.getString("USERNAME");
+                String password = resultSet.getString("PASSWORD");
+                User user = new User(username, password);
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return userList;
     }
 }

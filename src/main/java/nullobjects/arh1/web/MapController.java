@@ -1,21 +1,24 @@
 package nullobjects.arh1.web;
 
 import nullobjects.arh1.model.MapMarker;
+import nullobjects.arh1.model.User;
+import nullobjects.arh1.service.LoginService;
 import nullobjects.arh1.service.MapService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import nullobjects.arh1.repository.MapRepository;
 
 import java.util.List;
 
 @Controller
 public class MapController {
-    private MapService mapService;
+    private final MapService mapService;
+    private final LoginService loginService;
 
-    MapController(MapService mapService) {
+    MapController(MapService mapService, LoginService loginService) {
         this.mapService = mapService;
+        this.loginService = loginService;
     }
 
     @GetMapping("/")
@@ -67,4 +70,8 @@ public class MapController {
     @GetMapping("/city")
     @ResponseBody
     public MapMarker searchMarkersByCity(@RequestParam String name){ return mapService.findMarkerByCity(name);}
+
+    @GetMapping("/api/GetUsers")
+    @ResponseBody
+    public List<User> GetUsers() {return loginService.getUsers();}
 }
