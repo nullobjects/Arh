@@ -1,5 +1,6 @@
 package nullobjects.arh1.web;
 
+import jakarta.servlet.http.HttpSession;
 import nullobjects.arh1.model.MapMarker;
 import nullobjects.arh1.model.User;
 import nullobjects.arh1.service.LoginService;
@@ -85,8 +86,11 @@ public class MapController {
     }
 
     @PostMapping("/add_comment")
-    public String AddComment(@RequestParam String name, @RequestParam String comment, Model model) {
-
+    public String AddComment(@RequestParam String name, @RequestParam String comment, Model model, HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            mapService.addComment(name, user.getUsername(), comment);
+        }
         return "redirect:/";
     }
 }

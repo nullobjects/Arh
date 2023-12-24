@@ -72,13 +72,13 @@ public class MapRepository implements AutoCloseable {
         try {
             Statement statement = connection.createStatement();
             statement.execute("""
-                    CREATE TABLE IF NOT EXISTS PUBLIC.MAP_TRACKER_COMMENTS (
-                        "ID" INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-                        "MARKER_NAME" VARCHAR(255),
-                        "USERNAME" VARCHAR(32),
-                        "COMMENT" TEXT
-                    )
-                """);
+                CREATE TABLE IF NOT EXISTS PUBLIC.MAP_TRACKER_COMMENTS (
+                    ID INT AUTO_INCREMENT PRIMARY KEY,
+                    MARKER_NAME VARCHAR(255),
+                    USERNAME VARCHAR(32),
+                    COMMENT TEXT
+                )
+            """);
             statement.close();
 
             connection.commit();
@@ -144,19 +144,14 @@ public class MapRepository implements AutoCloseable {
         }
     }
 
-    public void InsertMapMarker(MapMarker mapMarker) {
+    public void InsertMarkerComment(String name, String username, String comment) {
         try {
-
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO PUBLIC.MAP_TRACKER_COMMENTS ("NAME")")
-            statement.setString(1, mapMarker.getName());
-            statement.setString(2, mapMarker.getDescription());
-            statement.setString(3, mapMarker.getCity());
-            statement.setString(4, mapMarker.getImage_url());
-            statement.setDouble(5, mapMarker.getReview());
-            statement.setDouble(6, mapMarker.getWorking_start());
-            statement.setDouble(7, mapMarker.getWorking_end());
-            statement.setDouble(8, mapMarker.getX_coord());
-            statement.setDouble(9, mapMarker.getY_coord());
+            PreparedStatement statement = connection.prepareStatement("""
+                    INSERT INTO PUBLIC.MAP_TRACKER_COMMENTS ("MARKER_NAME", "USERNAME", "COMMENT") VALUES (?, ?, ?)
+            """);
+            statement.setString(1, name);
+            statement.setString(2, username);
+            statement.setString(3, comment);
             statement.execute();
 
             connection.commit();

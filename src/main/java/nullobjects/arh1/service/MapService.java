@@ -32,7 +32,7 @@ public class MapService {
         mapRepository.add(name, disc, city, image, start, end, x, y);
     }
 
-    public void addComment(String name, String comment) {
-
+    public void addComment(String name, String username, String comment) {
+        mapRepository.InsertMarkerComment(name, username, comment);
     }
 }
