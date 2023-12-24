@@ -82,8 +82,11 @@ function searchMarkers(name) {
                 if (marker.name != data.name) {
                     mapa.removeLayer(marker);
                 }
-                // marker.addTo(map);
             }
+            if (name === " "){
+                marker.addTo(map);
+            }
+
         })
         .catch(error => console.error('Error:', error));
 }
