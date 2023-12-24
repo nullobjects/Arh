@@ -9,6 +9,7 @@ let options = {
 let mapa = new L.map('map', options);
 let layer = new L.TileLayer('https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=2a2a8fb8338646f1bfecaefa5e7de596');
 mapa.addLayer(layer);
+let originalMarkers = [];
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -26,6 +27,7 @@ img.height = 100;
 
 let mapMarkers = {};
 let mapMarkerCount = 0;
+
 fetch("http://localhost:8080/api/GetMarkers")
     .then(response => {
         if (!response.ok) {
@@ -39,9 +41,7 @@ fetch("http://localhost:8080/api/GetMarkers")
         mapMarkerCount = 0;
         for (let key in data){
             const artgal = data[key]
-            let marker = L.marker([artgal.x_coord, artgal.y_coord],{
-
-            }).addTo(mapa);
+            let marker = L.marker([artgal.x_coord, artgal.y_coord], {});
             img.src = artgal.image_url;
             marker.bindPopup(artgal.name + "<br>" + artgal.description + "<br>" + img.outerHTML + "<br>" +
                 "<a class=\"twitter-share-button\"\n" +
@@ -53,19 +53,30 @@ fetch("http://localhost:8080/api/GetMarkers")
             marker.name = artgal.name;
             mapMarkers[mapMarkerCount] = marker;
             mapMarkerCount = mapMarkerCount + 1
+            originalMarkers.push(marker);
         }
+        originalMarkers.forEach(marker => {
+            marker.addTo(mapa);
+        });
     })
     .catch(error => {
         console.error("Couldn't get the map markers:", error);
     });
 
-
 document.addEventListener('DOMContentLoaded', function() {
     function handleKeyPress(event) {
         if (event.keyCode === 13) {
             event.preventDefault();
-            const searchQuery = document.getElementById('searchText').value;
-            searchMarkers(searchQuery);
+            originalMarkers.forEach(marker => {
+                marker.addTo(mapa);
+            });
+            let searchQuery = document.getElementById('searchText').value;
+            if (searchQuery.trim() !== ""){
+            searchMarkers(searchQuery)
+                console.log(searchQuery);
+            } else {
+                console.log("empty")
+            }
         }
     }
     document.getElementById('searchText').addEventListener('keypress', handleKeyPress);
@@ -75,18 +86,13 @@ function searchMarkers(name) {
     fetch('/search?name=' + name)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-            console.log(mapMarkers)
-            for (let i = 0; i < mapMarkerCount; i++) {
-                let marker = mapMarkers[i];
+            for (let i = 0; i < originalMarkers.length; i++) {
+                let marker = originalMarkers[i];
                 if (marker.name != data.name) {
                     mapa.removeLayer(marker);
                 }
             }
-            if (name === " "){
-                marker.addTo(map);
-            }
-
         })
         .catch(error => console.error('Error:', error));
 }
+
