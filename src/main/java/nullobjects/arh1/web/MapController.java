@@ -49,6 +49,7 @@ public class MapController {
     }
 
     @GetMapping("/search")
+    @ResponseBody
     public MapMarker searchMarkersByName(@RequestParam String name) {
         return mapService.findMarkerByName(name);
     }
