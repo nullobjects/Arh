@@ -83,13 +83,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function searchMarkers(name) {
-    fetch('/search?name=' + name)
-        .then(response => response.json())
-        .then(data => {
             let found=false;
+            console.log(found)
             for (let i = 0; i < originalMarkers.length; i++) {
                 let marker = originalMarkers[i];
-                if (marker.name === data.name) {
+                if (marker.name === name.toUpperCase()) {
                     found = true;
                 } else {
                     mapa.removeLayer(marker);
@@ -100,21 +98,20 @@ function searchMarkers(name) {
                 originalMarkers.forEach(marker => {
                     mapa.removeLayer(marker);
                     });
-                }
-        })
-        .catch(error => console.error('Error:', error));
+            }
 }
 
 function CityFilter(city){
     fetch('/city?name=' + city)
         .then(response => response.json())
         .then(data => {
-            let found = false;
+            originalMarkers.forEach(marker => {
+                marker.addTo(mapa);
+            });
             for (let i = 0; i < originalMarkers.length; i++) {
                 let marker = originalMarkers[i];
-                if (marker.city === data.city) {
-                    found = true;
-                } else {
+                if (marker.city !== data.city)
+                {
                     mapa.removeLayer(marker);
                 }
             }
