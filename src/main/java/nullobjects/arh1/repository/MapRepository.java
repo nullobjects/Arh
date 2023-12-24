@@ -214,5 +214,45 @@ public class MapRepository implements AutoCloseable {
     public void delete(String name){
         getAllMarkers().remove(name);
     }
+
+    public MapMarker findMarkerByCity(String cityName) {
+        Pipe<String> pipe1 = new Pipe<>();
+        pipe1.addFilter(new UppercaseFilter());
+
+        Pipe<MapMarker> pipe2 = new Pipe<>();
+        pipe2.addFilter(new MarkerValidationFilter());
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE UPPER(CITY) LIKE ?");
+            statement.setString(1, "%" + cityName.toUpperCase() + "%");
+
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String name = resultSet.getString("NAME");
+                name = pipe1.runFilters(name);
+                String description = resultSet.getString("DESCRIPTION");
+                String city = resultSet.getString("CITY");
+                String imageUrl = resultSet.getString("IMAGE_URL");
+                Double review = resultSet.getDouble("REVIEW");
+                Integer working_start = resultSet.getInt("WORKING_START");
+                Integer working_end = resultSet.getInt("WORKING_END");
+                double xCoord = resultSet.getDouble("X_COORD");
+                double yCoord = resultSet.getDouble("Y_COORD");
+
+                MapMarker mapMarker = new MapMarker(name, description, city, imageUrl, review, working_start, working_end, xCoord, yCoord);
+                mapMarker = pipe2.runFilters(mapMarker);
+                resultSet.close();
+                statement.close();
+                return mapMarker;
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
 

@@ -60,4 +60,8 @@ public class MapController {
     public MapMarker searchMarkersByName(@RequestParam String name) {
         return mapService.findMarkerByName(name);
     }
+
+    @GetMapping("/city")
+    @ResponseBody
+    public MapMarker searchMarkersByCity(@RequestParam String city){ return mapService.findMarkerByCity(city);}
 }

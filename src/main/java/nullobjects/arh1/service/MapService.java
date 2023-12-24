@@ -5,6 +5,7 @@ import nullobjects.arh1.repository.MapRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MapService {
@@ -22,4 +23,5 @@ public class MapService {
     public void delete(String name){
         mapRepository.delete(name);
     }
+    public MapMarker findMarkerByCity(String city){ return mapRepository.findMarkerByCity(city);}
 }

@@ -105,3 +105,6 @@ function searchMarkers(name) {
         .catch(error => console.error('Error:', error));
 }
 
+function CityFilter(city){
+
+}
