@@ -215,6 +215,7 @@ public class MapRepository implements AutoCloseable {
         getAllMarkers().remove(name);
     }
 
+<<<<<<< Updated upstream
     public MapMarker findMarkerByCity(String cityName) {
         Pipe<String> pipe1 = new Pipe<>();
         pipe1.addFilter(new UppercaseFilter());
@@ -253,6 +254,10 @@ public class MapRepository implements AutoCloseable {
         }
 
         return null;
+=======
+    public void add(String name,String disc,String city,String image,int start,int end,double x,double y){
+        getAllMarkers().add(new MapMarker(name,disc,city,image,start,end,x,y));
+>>>>>>> Stashed changes
     }
 }
 

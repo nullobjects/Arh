@@ -33,20 +33,23 @@ public class MapController {
 
     @GetMapping("/add_gal")
     public String addGal(Model model){
-        //model.addAttribute("marker",mapService.getAllMarkers());
+        model.addAttribute("marker",mapService.getAllMarkers());
         return "add_gal";
     }
 
-    @GetMapping("/edit/{name}")
-    public String edit(@PathVariable String name, Model model){
-        if(mapService.findMarkerByName(name) != null){
-            MapMarker mapMarker = mapService.findMarkerByName(name);
-            model.addAttribute("mapName",mapMarker.getName());
-            model.addAttribute("marker",mapService.getAllMarkers());
-            return "edit-gal";
-        }
-        return "error";
+    @PostMapping("/add")
+    public String save(@RequestParam String name,
+                       @RequestParam String disc,
+                       @RequestParam String city,
+                       @RequestParam String image,
+                       @RequestParam int start,
+                       @RequestParam int end,
+                       @RequestParam double x,
+                       @RequestParam double y){
+        mapService.add(name, disc, city, image, start, end, x, y);
+        return "redirect:/";
     }
+
 
     @GetMapping("/delete_gal/{name}")
     public String deleteGal(@PathVariable String name,Model model){

@@ -6,15 +6,24 @@
     </head>
 
     <body>
-        <form th:action="@{/add-gal}">
+        <form th:action="@{/add}" th:method="POST">
             <label for="name">Name:</label>
             <input type="text" id="name" required placeholder="Name">
             <br>
             <label for="dis">Discription:</label>
             <input type="text" id="dis" required placeholder="Discription">
             <br>
+            <label for="city">City:</label>
+            <input type="text" id="city" required placeholder="City">
+            <br>
             <label for="imag">Image URL</label>
             <input type="url" id="imag" required placeholder="Image URL">
+            <br>
+            <label for="start">Opening hour</label>
+            <input type="number" id="start" required placeholder="Opening hour">
+            <br>
+            <label for="end">Closing hour</label>
+            <input type="number" id="end" required placeholder="Closing hour">
             <br>
             <label for="x-cord">X-Cord</label>
             <input type="number" id="x-cord" required placeholder="X-Cord">
