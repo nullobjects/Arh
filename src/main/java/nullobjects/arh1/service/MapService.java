@@ -35,4 +35,8 @@ public class MapService {
     public void addComment(String name, String username, String comment) {
         mapRepository.InsertMarkerComment(name, username, comment);
     }
+
+    public List<String> getComments(String name) {
+        return mapRepository.GetMarkerComments(name);
+    }
 }

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,7 +33,11 @@ public class MapController {
     @GetMapping("/api/GetMarkers")
     @ResponseBody
     public List<MapMarker> GetMarkers() {
-        return mapService.getAllMarkers();
+        List<MapMarker> markers = mapService.getAllMarkers();
+        ArrayList<String> a = new ArrayList<>();
+        a.add("hello please");
+        markers.get(0).setComments(a);
+        return markers;
     }
 
     @GetMapping("/add_gal")
@@ -91,6 +96,12 @@ public class MapController {
         if (user != null) {
             mapService.addComment(name, user.getUsername(), comment);
         }
-        return "redirect:/";
+        return "redirect:/?0";
+    }
+
+    @GetMapping("/api/GetComments")
+    @ResponseBody
+    public List<String> GetComments(@RequestParam String name) {
+        return mapService.getComments(name);
     }
 }

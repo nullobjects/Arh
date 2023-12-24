@@ -160,3 +160,10 @@ ul li ul li:hover a {
     display: inline-block;
     font-size: 25px;
 }
+
+.scrollable-div {
+    width: 100%; /* Set the width as needed */
+    height: 50px; /* Set the height as needed */
+    overflow: auto; /* Add a scrollbar when content overflows */
+    border: 1px solid #ccc; /* Optional: Add a border for styling */
+}

@@ -2,6 +2,9 @@ package nullobjects.arh1.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 public class MapMarker {
     private String name;
@@ -13,6 +16,7 @@ public class MapMarker {
     private Integer working_end; // Working end in minutes (if it ends in 9pm the value of this will be 21*60)
     private Double x_coord;
     private Double y_coord;
+    private List<String> comments = new ArrayList<>();
 
     public MapMarker(String name, String description, String city, String image_url, Double review, Integer working_start, Integer working_end, Double x_coord, Double y_coord) {
         this.name = name;

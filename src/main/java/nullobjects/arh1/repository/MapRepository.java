@@ -161,6 +161,28 @@ public class MapRepository implements AutoCloseable {
         }
     }
 
+    public List<String> GetMarkerComments(String name) {
+        List<String> comments = new ArrayList<>();
+
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKER_COMMENTS WHERE MARKER_NAME = ?");
+            statement.setString(1, name);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String comment = resultSet.getString("COMMENT");
+                comments.add(comment);
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return comments;
+    }
+
     public List<MapMarker> getAllMarkers() {
         Pipe<String> pipe1 = new Pipe<>();
         pipe1.addFilter(new UppercaseFilter());
@@ -186,6 +208,7 @@ public class MapRepository implements AutoCloseable {
                 double yCoord = resultSet.getDouble("Y_COORD");
 
                 MapMarker mapMarker = new MapMarker(name, description, city, imageUrl, review, working_start, working_end, xCoord, yCoord);
+                mapMarker.setComments(GetMarkerComments(name));
                 mapMarker = pipe2.runFilters(mapMarker);
 
                 markers.add(mapMarker);
@@ -233,6 +256,7 @@ public class MapRepository implements AutoCloseable {
                 double yCoord = resultSet.getDouble("Y_COORD");
 
                 MapMarker mapMarker = new MapMarker(name, description, city, imageUrl, review, working_start, working_end, xCoord, yCoord);
+                mapMarker.setComments(GetMarkerComments(name));
                 mapMarker = pipe2.runFilters(mapMarker);
                 resultSet.close();
                 statement.close();
@@ -288,6 +312,7 @@ public class MapRepository implements AutoCloseable {
                 double yCoord = resultSet.getDouble("Y_COORD");
 
                 MapMarker mapMarker = new MapMarker(name, description, city, imageUrl, review, working_start, working_end, xCoord, yCoord);
+                mapMarker.setComments(GetMarkerComments(name));
                 mapMarker = pipe2.runFilters(mapMarker);
                 resultSet.close();
                 statement.close();

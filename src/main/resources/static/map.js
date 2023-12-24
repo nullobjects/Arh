@@ -46,6 +46,7 @@ fetch("http://localhost:8080/api/GetMarkers")
             img.src = artgal.image_url;
             marker.name = artgal.name;
             marker.city = artgal.city;
+            marker.comments = artgal.comments;
             let commentForm = `
                 <div id="commentForm">
                     <form onsubmit="event.preventDefault(); addMarkerComment('${marker.name}')">
@@ -57,6 +58,11 @@ fetch("http://localhost:8080/api/GetMarkers")
                     </form>
                 </div>
             `;
+            commentForm += '<br><div class="scrollable-div">';
+            for (let i = 0; i < marker.comments.length; i++) {
+                commentForm += '<p>' + marker.comments[i] + '</p>';
+            }
+            commentForm += '</div>';
 
             marker.bindPopup(artgal.name + "<br>" + artgal.description + "<br>" + img.outerHTML + "<br>" +
                 "<a class=\"twitter-share-button\"\n" +
@@ -117,7 +123,7 @@ function searchMarkers(name) {
             let found= false;
             for (let i = 0; i < originalMarkers.length; i++) {
                 let marker = originalMarkers[i];
-                if (marker.name.includes(name)) {
+                if (marker.name.toUpperCase().includes(name.toUpperCase())) {
                     found = true;
                 } else {
                     mapa.removeLayer(marker);
@@ -147,7 +153,6 @@ function CityFilter(city){
 
 function addMarkerComment(marker_name) {
     let commentText = document.getElementById('markerComment').value;
-    let markerName;
     mapa.closePopup();
 
     fetch('/add_comment?comment=' + encodeURIComponent(commentText) + '&name=' + encodeURIComponent(marker_name), {
@@ -155,5 +160,12 @@ function addMarkerComment(marker_name) {
         headers: {
             'Content-Type': 'application/json',
         },
+    }).then(response => {
+        if (response.redirected) {
+            window.location.href = response.url;
+        }
     })
+        .catch(error => {
+            console.error('Error during fetch:', error);
+        });
 }
