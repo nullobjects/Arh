@@ -45,7 +45,7 @@ ul {
     padding: 0 30px;
     list-style-type: none;
     & li:not(:last-child) {
-        margin-right: 40px;
+        margin-right: 0px;
     }
     & li {
         border: 2px solid transparent;
