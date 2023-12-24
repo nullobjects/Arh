@@ -39,14 +39,14 @@ public class MapController {
 
     @PostMapping("/add")
     public String save(@RequestParam String name,
-                       @RequestParam String disc,
+                       @RequestParam String desc,
                        @RequestParam String city,
                        @RequestParam String image,
                        @RequestParam int start,
                        @RequestParam int end,
-                       @RequestParam double x,
-                       @RequestParam double y){
-        mapService.add(name, disc, city, image, start, end, x, y);
+                       @RequestParam double x_coord,
+                       @RequestParam double y_coord) {
+        mapService.add(name, desc, city, image, start, end, x_coord, y_coord);
         return "redirect:/";
     }
 

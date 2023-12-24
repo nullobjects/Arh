@@ -257,7 +257,7 @@ public class MapRepository implements AutoCloseable {
     }
 
     public void add(String name,String disc,String city,String image,int start,int end,double x,double y){
-        getAllMarkers().add(new MapMarker(name,disc,city,image,start,end,x,y));
+        InsertMapMarker(new MapMarker(name,disc,city,image,0D,start,end,x,y));
     }
 }
 
