@@ -1,6 +1,9 @@
 package nullobjects.arh1.service;
 
 import nullobjects.arh1.model.User;
+import nullobjects.arh1.model.exceptions.PasswordTooShortException;
+import nullobjects.arh1.model.exceptions.UsernameExistsException;
+import nullobjects.arh1.model.exceptions.UsernameTooShortException;
 import nullobjects.arh1.repository.LoginRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,11 +14,11 @@ public class LoginService {
         this.loginRepository = loginRepository;
     }
 
-    public boolean RegisterUser(String username, String password) {
+    public boolean RegisterUser(String username, String password) throws UsernameTooShortException, PasswordTooShortException, UsernameExistsException {
         if (username.length() < 5) {
-            throw new IllegalArgumentException("The username has to be atleast 5 characters long");
+            throw new UsernameTooShortException();
         } else if (password.length() < 5) {
-            throw new IllegalArgumentException("The password has to be atleast 5 characters long");
+            throw new PasswordTooShortException();
         }
 
         return loginRepository.RegisterUser(new User(username, password));

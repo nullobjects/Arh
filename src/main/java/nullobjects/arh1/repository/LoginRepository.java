@@ -1,6 +1,7 @@
 package nullobjects.arh1.repository;
 
 import nullobjects.arh1.model.User;
+import nullobjects.arh1.model.exceptions.UsernameExistsException;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -35,20 +36,35 @@ public class LoginRepository {
         }
     }
 
-    public boolean RegisterUser(User user) {
-        String query = "INSERT INTO PUBLIC.USERS (USERNAME, PASSWORD) VALUES (?, ?)";
+    public boolean RegisterUser(User user) throws UsernameExistsException {
+        String query = "SELECT '1' FROM PUBLIC.USERS WHERE USERNAME = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setString(2, user.getPassword());
 
-            int rowsAffected = preparedStatement.executeUpdate();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) { // Veke postoi takov username
+                    throw new UsernameExistsException();
+                }
 
-            return rowsAffected > 0;
+                String query2 = "INSERT INTO PUBLIC.USERS (USERNAME, PASSWORD) VALUES (?, ?)";
+
+                try (PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
+                    preparedStatement2.setString(1, user.getUsername());
+                    preparedStatement2.setString(2, user.getPassword());
+
+                    int rowsAffected = preparedStatement2.executeUpdate();
+                    return rowsAffected > 0;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
+
+        return false;
     }
 
     public User GetUserByUserName(String username) {
@@ -73,11 +89,10 @@ public class LoginRepository {
             preparedStatement.setString(2, user.getPassword());
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                // If there is at least one row in the result set, the login is successful
                 return resultSet.next();
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle or log the exception as needed
+            e.printStackTrace();
         }
 
         return false;
