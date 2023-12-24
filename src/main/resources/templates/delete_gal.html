@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:each="mar : ${marker}" th:action="@{/delete_gal}">
+    <input type="radio" th:text="'Name: ' + ${mar.getName()} + ' Description ' + ${mar.getDescription()} + ' Image URL ' + ${mar.getImage_url()}
+    + ' X-Cord ' + ${mar.getX_coord()} + ' Y-Cord ' + ${mar.getY_coord()}">
+</form>
+
+</body>
+</html>

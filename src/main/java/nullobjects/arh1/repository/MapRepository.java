@@ -210,5 +210,9 @@ public class MapRepository implements AutoCloseable {
 
         return null;
     }
+
+    public void delete(String name){
+        getAllMarkers().remove(name);
+    }
 }
 

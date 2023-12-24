@@ -48,6 +48,13 @@ public class MapController {
         return "error";
     }
 
+    @GetMapping("/delete_gal/{name}")
+    public String deleteGal(@PathVariable String name,Model model){
+        mapService.delete(name);
+        model.addAttribute("marker",mapService.getAllMarkers());
+        return "delete_gal";
+    }
+
     @GetMapping("/search")
     @ResponseBody
     public MapMarker searchMarkersByName(@RequestParam String name) {

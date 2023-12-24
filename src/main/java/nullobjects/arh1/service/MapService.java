@@ -19,4 +19,7 @@ public class MapService {
     public MapMarker findMarkerByName(String name) {
         return mapRepository.findMarkerByName(name);
     }
+    public void delete(String name){
+        mapRepository.delete(name);
+    }
 }
