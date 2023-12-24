@@ -35,9 +35,9 @@ public class MapRepository implements AutoCloseable {
             InsertMapMarker(new MapMarker("Mala stanica", "023126856, http://www.nationalgallery.mk/, 18", "Skopje", "/images/MAЛА.jpg", 1.5,60, 60, 41.99154778918674, 21.424894254800908));
             InsertMapMarker(new MapMarker("Anagor", "023224227, http://www.anagor.com.mk/, Naroden Front 21", "Skopje", "/images/Anagor - Kapishtec.jpg", 1.5,60, 60, 41.99413749653703, 21.41566834950312));
             InsertMapMarker(new MapMarker("Anju", "078515342", "Skopje", "/images/AN JU Atelje.jpg", 1.5,60, 60, 41.999952364682294, 21.497607958477726));
-            InsertMapMarker(new MapMarker("Bukefal", "070232459, http://www.bukefal.com.mk/, St Clement of Ohrid 54", "Skopje", "/images/Art Gallery Bukefal.jpg", 1.5,60, 60, 41.114552018256965, 20.80021393874093));
-            InsertMapMarker(new MapMarker("Dudan", "070501573, http://anastasdudan.com.mk/, Jane Sandanski 14", "Skopje", "/images/Atelier Anastas Dudan.jpg", 1.5,60, 60, 41.110054283305445, 20.805640196713345));
-            InsertMapMarker(new MapMarker("Emanuela", "046253328, Sveti Kliment Ohridski", "Skopje", "/images/Art Galerie Emanuela.jpg", 1.5,60, 60, 41.113900756374626, 20.799741633820744));
+            InsertMapMarker(new MapMarker("Bukefal", "070232459, http://www.bukefal.com.mk/, St Clement of Ohrid 54", "Ohrid", "/images/Art Gallery Bukefal.jpg", 1.5,60, 60, 41.114552018256965, 20.80021393874093));
+            InsertMapMarker(new MapMarker("Dudan", "070501573, http://anastasdudan.com.mk/, Jane Sandanski 14", "Ohrid", "/images/Atelier Anastas Dudan.jpg", 1.5,60, 60, 41.110054283305445, 20.805640196713345));
+            InsertMapMarker(new MapMarker("Emanuela", "046253328, Sveti Kliment Ohridski", "Ohrid", "/images/Art Galerie Emanuela.jpg", 1.5,60, 60, 41.113900756374626, 20.799741633820744));
         } catch (SQLException e) {
             throw new RuntimeException("Failed to establish a database connection.", e);
         }

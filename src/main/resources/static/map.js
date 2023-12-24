@@ -51,6 +51,7 @@ fetch("http://localhost:8080/api/GetMarkers")
                 "<a target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgithub.com%2Fnullobjects%2FArh&amp;quote=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here%3A\" class=\"fb-xfbml-parse-ignore\">Share</a>" +
                 "</div>");
             marker.name = artgal.name;
+            marker.city = artgal.city;
             mapMarkers[mapMarkerCount] = marker;
             mapMarkerCount = mapMarkerCount + 1
             originalMarkers.push(marker);
@@ -101,22 +102,17 @@ function searchMarkers(name) {
             }
 }
 
+
 function CityFilter(city){
-    fetch('/city?name=' + city)
-        .then(response => response.json())
-        .then(data => {
             originalMarkers.forEach(marker => {
                 marker.addTo(mapa);
             });
             for (let i = 0; i < originalMarkers.length; i++) {
                 let marker = originalMarkers[i];
-                if (marker.city !== data.city)
+                if (marker.city !== city)
                 {
+                    console.log(marker.city + ":" + city);
                     mapa.removeLayer(marker);
                 }
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
 }
