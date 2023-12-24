@@ -31,8 +31,10 @@ public class LoginController {
     }
 
     @PostMapping
-    public String LoginUser(@RequestParam String username, @RequestParam String password) {
+    public String LoginUser(@RequestParam String username, @RequestParam String password, HttpSession httpSession) {
         if (loginService.LoginUser(username, password)) {
+            User user = loginService.GetUserByUserName(username);
+            httpSession.setAttribute("user", user);
             return "redirect:/";
         }
         return "redirect:/login";
@@ -65,8 +67,6 @@ public class LoginController {
         try {
             boolean good = loginService.RegisterUser(username, password);
             if (good) {
-                User user = loginService.GetUserByUserName(username);
-                httpSession.setAttribute("user", user);
                 return "redirect:/login";
             } else {
                 redirectAttributes.addFlashAttribute("error", "Registration failed for an unknown reason.");

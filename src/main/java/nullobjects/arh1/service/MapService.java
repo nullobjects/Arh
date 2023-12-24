@@ -32,5 +32,7 @@ public class MapService {
         mapRepository.add(name, disc, city, image, start, end, x, y);
     }
 
+    public void addComment(String name, String comment) {
 
+    }
 }

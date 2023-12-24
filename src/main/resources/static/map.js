@@ -44,10 +44,11 @@ fetch("http://localhost:8080/api/GetMarkers")
             const artgal = data[key]
             let marker = L.marker([artgal.x_coord, artgal.y_coord], {});
             img.src = artgal.image_url;
-
+            marker.name = artgal.name;
+            marker.city = artgal.city;
             let commentForm = `
                 <div id="commentForm">
-                    <form onsubmit="event.preventDefault(); updateMarkerComment()">
+                    <form onsubmit="event.preventDefault(); addMarkerComment('${marker.name}')">
                         <div>
                             <a class="comment">Add a comment:</a><br>
                             <textarea id="markerComment" style="font-family: sans-serif; font-size: 1.2em; resize: none;" placeholder="How would you describe this place?"></textarea>
@@ -65,8 +66,6 @@ fetch("http://localhost:8080/api/GetMarkers")
                 "<a target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgithub.com%2Fnullobjects%2FArh&amp;quote=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here%3A\" class=\"fb-xfbml-parse-ignore\">Share</a>" +
                 "</div>" +
                 "<br>" + commentForm)
-            marker.name = artgal.name;
-            marker.city = artgal.city;
             mapMarkers[mapMarkerCount] = marker;
             mapMarkerCount = mapMarkerCount + 1;
             originalMarkers.push(marker);
@@ -131,10 +130,15 @@ function CityFilter(city){
             }
 }
 
-/*
-function updateMarkerComment() {
+function addMarkerComment(marker_name) {
     let commentText = document.getElementById('markerComment').value;
-    let markerName =
+    let markerName;
     mapa.closePopup();
+
+    fetch('/add_comment?comment=' + encodeURIComponent(commentText) + '&name=' + encodeURIComponent(marker_name), {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
 }
- */

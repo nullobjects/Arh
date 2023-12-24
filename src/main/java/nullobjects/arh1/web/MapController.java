@@ -83,4 +83,10 @@ public class MapController {
     public List<User> GetUsers() {
         return loginService.getUsers();
     }
+
+    @PostMapping("/add_comment")
+    public String AddComment(@RequestParam String name, @RequestParam String comment, Model model) {
+
+        return "redirect:/";
+    }
 }

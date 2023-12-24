@@ -18,6 +18,7 @@ public class MapRepository implements AutoCloseable {
         try {
             connection = DriverManager.getConnection("jdbc:h2:file:./src/main/resources/static/mapdb", "map_user", "map_password");
             CreateMapMarkerTable();
+            CreateMapMarkerCommentTable();
 
             InsertMapMarker(new MapMarker("Arte", "077834150, http://www.artonline.mk/, Boulevard Mitropolit Teodosij Gologanov 49", "Skopje", "/images/ARTE Galerija.jpg", 1.5, 60, 60, 41.99491581140953, 21.42130350535809));
             InsertMapMarker(new MapMarker("Zograf", "075584909, Dame Gruev", "Skopje", "/images/Art Gallery Zograf.JPG", 1.5, 60, 60, 41.99730016371808, 21.427663092023362));
@@ -67,6 +68,25 @@ public class MapRepository implements AutoCloseable {
         }
     }
 
+    private void CreateMapMarkerCommentTable() {
+        try {
+            Statement statement = connection.createStatement();
+            statement.execute("""
+                    CREATE TABLE IF NOT EXISTS PUBLIC.MAP_TRACKER_COMMENTS (
+                        "ID" INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                        "MARKER_NAME" VARCHAR(255),
+                        "USERNAME" VARCHAR(32),
+                        "COMMENT" TEXT
+                    )
+                """);
+            statement.close();
+
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void InsertMapMarker(MapMarker mapMarker) {
         try {
             PreparedStatement statement = connection.prepareStatement("""
@@ -106,6 +126,28 @@ public class MapRepository implements AutoCloseable {
                         v."Y_COORD"
                     )
             """);
+            statement.setString(1, mapMarker.getName());
+            statement.setString(2, mapMarker.getDescription());
+            statement.setString(3, mapMarker.getCity());
+            statement.setString(4, mapMarker.getImage_url());
+            statement.setDouble(5, mapMarker.getReview());
+            statement.setDouble(6, mapMarker.getWorking_start());
+            statement.setDouble(7, mapMarker.getWorking_end());
+            statement.setDouble(8, mapMarker.getX_coord());
+            statement.setDouble(9, mapMarker.getY_coord());
+            statement.execute();
+
+            connection.commit();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void InsertMapMarker(MapMarker mapMarker) {
+        try {
+
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO PUBLIC.MAP_TRACKER_COMMENTS ("NAME")")
             statement.setString(1, mapMarker.getName());
             statement.setString(2, mapMarker.getDescription());
             statement.setString(3, mapMarker.getCity());
@@ -268,6 +310,10 @@ public class MapRepository implements AutoCloseable {
 
     public void add(String name,String disc,String city,String image,int start,int end,double x,double y){
         InsertMapMarker(new MapMarker(name,disc,city,image,0D,start,end,x,y));
+    }
+
+    public void addComment(String name, String comment) {
+
     }
 }
 

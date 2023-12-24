@@ -43,7 +43,7 @@
                 <li><a onclick="CityFilter('Ohrid')">Ohrid</a></li>
             </ul>
             </li>
-            <li>
+            <li th:if="${session.get('user')}">
                 <a href="#0">CONTRIBUTE</a>
                 <ul>
                     <li><a href=add_gal>ADD GALLERIES</a></li>
@@ -51,7 +51,7 @@
                 </ul>
             </li>
             <li><a href="https://github.com/nullobjects/Arh">GITHUB</a> </li>
-            <li><a id="login">LOGIN</a><script>
+            <li th:if="!${session.get('user')}"><a id="login">LOGIN</a><script>
                 document.getElementById("login").addEventListener("click", function(event) {
                     event.preventDefault();
                     window.location.href = "/login";
