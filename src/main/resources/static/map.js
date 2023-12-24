@@ -65,7 +65,22 @@ fetch("http://localhost:8080/api/GetMarkers")
                 "<div class=\"fb-share-button\" data-href=\"https://github.com/nullobjects/Arh\" data-layout=\"\" data-size=\"\">" +
                 "<a target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgithub.com%2Fnullobjects%2FArh&amp;quote=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here%3A\" class=\"fb-xfbml-parse-ignore\">Share</a>" +
                 "</div>" +
-                "<br>" + commentForm)
+                "<br>" + commentForm + "<form class=\"star-rating\">\n" +
+                "  <input class=\"radio-input\" type=\"radio\" id=\"star5\" name=\"star-input\" value=\"5\" />\n" +
+                "  <label class=\"radio-label\" class for=\"star5\" title=\"5 stars\">5 stars</label>\n" +
+                "\n" +
+                "  <input class=\"radio-input\" type=\"radio\" id=\"star4\" name=\"star-input\" value=\"4\" />\n" +
+                "  <label class=\"radio-label\" for=\"star4\" title=\"4 stars\">4 stars</label>\n" +
+                "\n" +
+                "  <input class=\"radio-input\" type=\"radio\" id=\"star3\" name=\"star-input\" value=\"3\" />\n" +
+                "  <label class=\"radio-label\" for=\"star3\" title=\"3 stars\">3 stars</label>\n" +
+                "\n" +
+                "  <input class=\"radio-input\" type=\"radio\" id=\"star2\" name=\"star-input\" value=\"2\" />\n" +
+                "  <label class=\"radio-label\" for=\"star2\" title=\"2 stars\">2 stars</label>\n" +
+                "\n" +
+                "  <input class=\"radio-input\" type=\"radio\" id=\"star1\" name=\"star-input\" value=\"1\" />\n" +
+                "  <label class=\"radio-label\" for=\"star1\" title=\"1 star\">1 star</label>\n" +
+                "</form>")
             mapMarkers[mapMarkerCount] = marker;
             mapMarkerCount = mapMarkerCount + 1;
             originalMarkers.push(marker);
