@@ -216,7 +216,6 @@ public class MapRepository implements AutoCloseable {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM PUBLIC.MAP_TRACKERS WHERE NAME = ?");
             statement.setString(1, name);
             int rowsAffected = statement.executeUpdate();
-            System.out.println(rowsAffected);
             statement.close();
             return rowsAffected > 0;
         } catch (SQLException e) {
