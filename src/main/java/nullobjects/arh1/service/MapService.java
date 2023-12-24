@@ -23,12 +23,12 @@ public class MapService {
     public void delete(String name){
         mapRepository.delete(name);
     }
-<<<<<<< Updated upstream
+
     public MapMarker findMarkerByCity(String city){ return mapRepository.findMarkerByCity(city);}
-=======
+
     public void add(String name,String disc,String city,String image,int start,int end,double x,double y){
         mapRepository.add(name, disc, city, image, start, end, x, y);
     }
 
->>>>>>> Stashed changes
+
 }
