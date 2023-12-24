@@ -1,5 +1,7 @@
 package nullobjects.arh1.web;
 
+import jakarta.servlet.http.HttpSession;
+import nullobjects.arh1.model.User;
 import nullobjects.arh1.model.exceptions.PasswordTooShortException;
 import nullobjects.arh1.model.exceptions.UsernameExistsException;
 import nullobjects.arh1.model.exceptions.UsernameTooShortException;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/login")
@@ -41,34 +44,42 @@ public class LoginController {
     }
 
     @GetMapping("/register")
-    public ModelAndView RegisterPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("register");
-        return modelAndView;
+    public String RegisterPage(Model model, RedirectAttributes redirectAttributes) {
+        model.addAllAttributes(redirectAttributes.getFlashAttributes());
+        return "register";
     }
 
     @PostMapping("/register")
-    public String RegisterUser(@RequestParam String username, @RequestParam String password, @RequestParam String confirm_password, Model model) {
+    public String registerUser(
+            @RequestParam String username,
+            @RequestParam String password,
+            @RequestParam String confirm_password,
+            RedirectAttributes redirectAttributes,
+            HttpSession httpSession
+    ) {
         if (!password.equals(confirm_password)) {
+            redirectAttributes.addFlashAttribute("error", "Passwords do not match.");
             return "redirect:/login/register";
         }
 
         try {
             boolean good = loginService.RegisterUser(username, password);
             if (good) {
+                User user = loginService.GetUserByUserName(username);
+                httpSession.setAttribute("user", user);
                 return "redirect:/login";
             } else {
+                redirectAttributes.addFlashAttribute("error", "Registration failed for an unknown reason.");
                 return "redirect:/login/register";
             }
         } catch (UsernameTooShortException e) {
-            model.addAttribute("error", "Username is too short.");
-            return "redirect:/login/register";
+            redirectAttributes.addFlashAttribute("error", "Username is too short.");
         } catch (PasswordTooShortException e) {
-            model.addAttribute("error", "Password is too short.");
-            return "redirect:/login/register";
+            redirectAttributes.addFlashAttribute("error", "Password is too short.");
         } catch (UsernameExistsException e) {
-            model.addAttribute("error", "Username already exists.");
-            return "redirect:/login/register";
+            redirectAttributes.addFlashAttribute("error", "Username already exists.");
         }
+
+        return "redirect:/login/register";
     }
 }

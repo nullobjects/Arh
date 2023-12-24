@@ -27,4 +27,8 @@ public class LoginService {
     public boolean LoginUser(String username, String password) {
         return loginRepository.LoginUser(new User(username, password));
     }
+
+    public User GetUserByUserName(String username) {
+        return loginRepository.GetUserByUserName(username);
+    }
 }
