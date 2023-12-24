@@ -50,7 +50,7 @@ fetch("http://localhost:8080/api/GetMarkers")
                     <form onsubmit="event.preventDefault(); updateMarkerComment()">
                         <div>
                             <a class="comment">Add a comment:</a><br>
-                            <textarea id="markerComment" style="font-family:sans-serif;font-size:1.2em;" placeholder="How would you describe this place?"></textarea>
+                            <textarea id="markerComment" style="font-family: sans-serif; font-size: 1.2em; resize: none;" placeholder="How would you describe this place?"></textarea>
                         </div>
                         <input type="submit" value="Submit">
                     </form>
