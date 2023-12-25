@@ -59,19 +59,30 @@ fetch("http://localhost:8080/api/GetMarkers")
                 </div>
             `;
             commentForm += '<br><div class="scrollable-div">';
+            commentForm += '<p id="default_notice">' + "You can only post comments if you are logged in." + '</p>'
+            if (marker.comments.length>0){
+                document.getElementById("default_notice").style.display='none';
+            }
             for (let i = 0; i < marker.comments.length; i++) {
                 commentForm += '<p>' + marker.comments[i] + '</p>';
             }
             commentForm += '</div>';
 
-            marker.bindPopup(artgal.name + "<br>" + artgal.description + "<br>" + img.outerHTML + "<br>" +
-                "<a class=\"twitter-share-button\"\n" +
-                "href=\"https://twitter.com/intent/tweet?text=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here:%20http://localhost:8080/\"\n" +
-                "data-size=\"large\">\n" + "Tweet" + "</a>" +
+            marker.bindPopup(
+                artgal.name + "<br>" +
+                artgal.description + "<br>" +
+                img.outerHTML + "<br>" +
+                "<div style='display: flex;'>" +
+                "<a class=\"twitter-share-button\" href=\"https://twitter.com/intent/tweet?text=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here:%20http://localhost:8080/\" data-size=\"large\">" + "Tweet" + "</a>" +
+                "<div style='margin-left: 8px;'>" +
                 "<div class=\"fb-share-button\" data-href=\"https://github.com/nullobjects/Arh\" data-layout=\"\" data-size=\"\">" +
                 "<a target=\"_blank\" href=\"https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgithub.com%2Fnullobjects%2FArh&amp;quote=I%20found%20this%20cool%20gallery%20called%20" + artgal.name + "%20check%20it%20out%20here%3A\" class=\"fb-xfbml-parse-ignore\">Share</a>" +
                 "</div>" +
-                "<br>" + commentForm + "<form class=\"star-rating\">\n" +
+                "</div>" +
+                "</div>" +
+                "<a href='javascript:void(0)' id='review' onclick='document.getElementById(\"extras\").hidden=false; document.getElementById(\"review\").hidden=true;'>Review</a>" +
+                "<div id='extras' hidden='true'>" +
+                commentForm + "<form class=\"star-rating\">\n" +
                 "  <input class=\"radio-input\" type=\"radio\" id=\"star5\" name=\"star-input\" value=\"5\" />\n" +
                 "  <label class=\"radio-label\" class for=\"star5\" title=\"5 stars\">5 stars</label>\n" +
                 "\n" +
@@ -86,7 +97,7 @@ fetch("http://localhost:8080/api/GetMarkers")
                 "\n" +
                 "  <input class=\"radio-input\" type=\"radio\" id=\"star1\" name=\"star-input\" value=\"1\" />\n" +
                 "  <label class=\"radio-label\" for=\"star1\" title=\"1 star\">1 star</label>\n" +
-                "</form>")
+                "</form>" + "</div>")
             mapMarkers[mapMarkerCount] = marker;
             mapMarkerCount = mapMarkerCount + 1;
             originalMarkers.push(marker);
