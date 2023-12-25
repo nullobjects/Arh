@@ -12,21 +12,23 @@
 Оваа апликација не само што обезбедува информации за уметничките галерии во Македонија, туку и создава динамична заедница на уметнички љубители кои можат да споделуваат свои искуства и препораки. </span>
 
 <b>Функционални и нефункционални барања</b> [Документ.pdf](https://github.com/nullobjects/Arh1/files/13328656/default.pdf)
+# Video
+https://github.com/nullobjects/Arh/assets/20116149/af766b4d-097d-478a-a6f9-31fea339e5d6
 
+(you can find the full resolution video in the project files)
+# Photos
 ![app_showcase_gif](https://github.com/nullobjects/Arh1/assets/20116149/8e092160-5383-44b8-8f68-2652822f4e8d)
 ![detailed_view](https://github.com/nullobjects/Arh1/assets/20116149/8677edf5-d9c9-49f7-a1b3-024bbec8a7d3)
-<img width="563" alt="image" src="https://github.com/nullobjects/Arh1/assets/20116149/acd739bd-992e-4ec9-be0e-cb19e03e0aa2">
-
 How to run:
 1. Press run on ArhApplication [SpringBootApplication] <img width="212" alt="image" src="https://github.com/nullobjects/Arh1/assets/20116149/528a1e3b-5144-46ce-93af-4533bbb06bbc">
 2. Go to localhost:8080/ (in your browser) <img width="210" alt="image" src="https://github.com/nullobjects/Arh1/assets/20116149/0c36f895-ed6d-4b8c-990a-388ba9560ea5">
 
 <b>Членови:</b>
 <ul>
-  <li>Александар Трајковски (211570)</li>
   <li>Боби Богданоски (215085)</li>
-  <li>Миро Тасевски (211265)</li>
   <li>Виктор Aтанасоски (213270)</li>
+  <li>Миро Тасевски (211265)</li>
+  <li>Александар Трајковски (211570)</li>
 </ul>
 
 English Version:
