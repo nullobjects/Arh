@@ -60,9 +60,7 @@ fetch("http://localhost:8080/api/GetMarkers")
             `;
             commentForm += '<br><div class="scrollable-div">';
             commentForm += '<p id="default_notice">' + "You can only post comments if you are logged in." + '</p>'
-            if (marker.comments.length>0){
-                document.getElementById("default_notice").style.display='none';
-            }
+
             for (let i = 0; i < marker.comments.length; i++) {
                 commentForm += '<p>' + marker.comments[i] + '</p>';
             }
@@ -98,10 +96,19 @@ fetch("http://localhost:8080/api/GetMarkers")
                 "  <input class=\"radio-input\" type=\"radio\" id=\"star1\" name=\"star-input\" value=\"1\" />\n" +
                 "  <label class=\"radio-label\" for=\"star1\" title=\"1 star\">1 star</label>\n" +
                 "</form>" + "</div>")
+
             mapMarkers[mapMarkerCount] = marker;
             mapMarkerCount = mapMarkerCount + 1;
             originalMarkers.push(marker);
             markerComments[artgal.name] = "";
+
+            marker.on('popupopen', function() {
+                if (marker.comments.length > 0) {
+                    let notice = document.getElementById("default_notice")
+                    notice.style.display = 'none';
+                }
+            });
+
         }
         originalMarkers.forEach(marker => {
             marker.addTo(mapa);
