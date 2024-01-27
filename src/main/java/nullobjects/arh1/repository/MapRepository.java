@@ -65,7 +65,7 @@ public class MapRepository implements AutoCloseable {
 
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
     }
 
@@ -84,7 +84,7 @@ public class MapRepository implements AutoCloseable {
 
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
     }
 
@@ -141,7 +141,7 @@ public class MapRepository implements AutoCloseable {
             connection.commit();
             statement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
     }
 
@@ -158,7 +158,7 @@ public class MapRepository implements AutoCloseable {
             connection.commit();
             statement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
     }
 
@@ -178,7 +178,7 @@ public class MapRepository implements AutoCloseable {
             resultSet.close();
             statement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
 
         return comments;
@@ -216,7 +216,7 @@ public class MapRepository implements AutoCloseable {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
 
         return markers;
@@ -229,7 +229,7 @@ public class MapRepository implements AutoCloseable {
                 connection.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
     }
     public MapMarker findMarkerByName(String markerName) {
@@ -247,7 +247,7 @@ public class MapRepository implements AutoCloseable {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle exception appropriately
+            handleSQLException(e); // Handle exception appropriately
         }
 
         return null;
@@ -284,7 +284,7 @@ public class MapRepository implements AutoCloseable {
             statement.close();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
 
         return false;
@@ -306,7 +306,7 @@ public class MapRepository implements AutoCloseable {
             }
         } catch (SQLException e) {
             // Handle exception appropriately
-            e.printStackTrace();
+            handleSQLException(e);
         }
         return null;
     }
@@ -346,5 +346,10 @@ public class MapRepository implements AutoCloseable {
     public void addComment(String name, String comment) {
 
     }
+
+    private void handleSQLException(SQLException e) {
+        e.printStackTrace();
+    }
+
 }
 
