@@ -29,15 +29,4 @@ public class MapMarker {
         this.x_coord = x_coord;
         this.y_coord = y_coord;
     }
-
-    public MapMarker(String name, String description, String city, String image_url, Integer working_start, Integer working_end, Double x_coord, Double y_coord) {
-        this.name = name;
-        this.description = description;
-        this.city = city;
-        this.image_url = image_url;
-        this.working_start = working_start;
-        this.working_end = working_end;
-        this.x_coord = x_coord;
-        this.y_coord = y_coord;
-    }
 }

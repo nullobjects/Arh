@@ -120,6 +120,7 @@ public class LoginRepository {
         return userList;
     }
 
+    // Handle exception
     private void handleSQLException(SQLException e) {
         e.printStackTrace();
     }
