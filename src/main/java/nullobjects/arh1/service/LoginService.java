@@ -34,5 +34,7 @@ public class LoginService {
         return loginRepository.GetUserByUserName(username);
     }
 
-    public List<User> getUsers(){return loginRepository.getUsers();}
+    public List<User> getUsers(){
+        return loginRepository.getUsers();
+    }
 }

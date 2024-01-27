@@ -63,7 +63,7 @@ public class MapController {
     }
 
     @PostMapping("/delete_gal")
-    public String deleteGal(@RequestParam String name, Model model){
+    public String deleteGal(@RequestParam String name){
         mapService.delete(name);
         return "redirect:/";
     }
@@ -87,7 +87,7 @@ public class MapController {
     }
 
     @PostMapping("/add_comment")
-    public String AddComment(@RequestParam String name, @RequestParam String comment, Model model, HttpSession httpSession) {
+    public String AddComment(@RequestParam String name, @RequestParam String comment, HttpSession httpSession) {
         User user = (User) httpSession.getAttribute("user");
         if (user != null) {
             mapService.addComment(name, user.getUsername(), comment);
