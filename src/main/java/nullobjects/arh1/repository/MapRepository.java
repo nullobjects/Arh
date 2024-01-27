@@ -217,6 +217,7 @@ public class MapRepository implements AutoCloseable {
             handleSQLException(e);
         }
     }
+
     public MapMarker findMarkerByName(String markerName) {
         try (PreparedStatement statement = prepareStatementForName(markerName);
              ResultSet resultSet = statement.executeQuery()) {
@@ -231,36 +232,6 @@ public class MapRepository implements AutoCloseable {
 
         return null;
     }
-
-    private PreparedStatement prepareStatementForName(String markerName) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE UPPER(NAME) LIKE ?");
-        statement.setString(1, "%" + markerName.toUpperCase() + "%");
-        return statement;
-    }
-
-    private MapMarker mapResultSetToMapMarker(ResultSet resultSet) throws SQLException {
-        Pipe<String> pipe1 = new Pipe<>();
-        pipe1.addFilter(new UppercaseFilter());
-
-        Pipe<MapMarker> pipe2 = new Pipe<>();
-        pipe2.addFilter(new MarkerValidationFilter());
-
-        String name = resultSet.getString("NAME");
-        String description = resultSet.getString("DESCRIPTION");
-        String city = resultSet.getString("CITY");
-        String imageUrl = resultSet.getString("IMAGE_URL");
-        Double review = resultSet.getDouble("REVIEW");
-        Integer workingStart = resultSet.getInt("WORKING_START");
-        Integer workingEnd = resultSet.getInt("WORKING_END");
-        double xCoord = resultSet.getDouble("X_COORD");
-        double yCoord = resultSet.getDouble("Y_COORD");
-
-        MapMarker mapMarker = new MapMarker(name, description, city, imageUrl, review, workingStart, workingEnd, xCoord, yCoord);
-        mapMarker.setComments(getMarkerComments(name)); // Assuming getMarkerComments is defined elsewhere
-        mapMarker = pipe2.runFilters(mapMarker);
-        return mapMarker;
-    }
-
 
     public boolean delete(String name) {
         try {
@@ -290,23 +261,10 @@ public class MapRepository implements AutoCloseable {
                 }
             }
         } catch (SQLException e) {
-            // Handle exception appropriately
             handleSQLException(e);
         }
         return null;
     }
-
-    private PreparedStatement prepareStatementForCity(String cityName) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE UPPER(CITY) LIKE ?");
-        statement.setString(1, "%" + cityName.toUpperCase() + "%");
-        return statement;
-    }
-
-    private List<String> getMarkerComments(String markerName) {
-        // Implement logic to retrieve comments for the marker
-        return Collections.emptyList(); // Placeholder, replace with actual logic
-    }
-
 
     public void add(String name,String disc,String city,String image,int start,int end,double x,double y){
         InsertMapMarker(new MapMarker(name,disc,city,image,0D,start,end,x,y));
@@ -316,6 +274,68 @@ public class MapRepository implements AutoCloseable {
 
     }
 
+    //Retrieves comments associated with a map marker.
+    private List<String> getMarkerComments(String markerName) {
+        // Implement logic to retrieve comments for the marker
+        return Collections.emptyList(); // Placeholder, replace with actual logic
+    }
+
+    /**
+     * Prepares a PreparedStatement for retrieving map tracker data based on a partial city name.
+     * Constructs a SQL query to select data from the MAP_TRACKERS table where the city matches
+     * the given cityName. Sets the parameter in the PreparedStatement
+     * to search for the given cityName pattern in uppercase. Returns the prepared statement.
+     */
+    private PreparedStatement prepareStatementForCity(String cityName) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE UPPER(CITY) LIKE ?");
+        statement.setString(1, "%" + cityName.toUpperCase() + "%");
+        return statement;
+    }
+
+
+    /**
+     * Prepares a PreparedStatement for retrieving map tracker data based on a partial marker name.
+     * Constructs a SQL query to select data from the MAP_TRACKERS table where the name matches
+     * the given markerName. Sets the parameter in the PreparedStatement
+     * to search for the given markerName pattern in uppercase. Returns the prepared statement.
+     */
+    private PreparedStatement prepareStatementForName(String markerName) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE UPPER(NAME) LIKE ?");
+        statement.setString(1, "%" + markerName.toUpperCase() + "%");
+        return statement;
+    }
+
+    /**
+     * Converts a ResultSet containing data about a map marker into a MapMarker object.
+     * Retrieves information such as name, description, city, image URL, review, working hours,
+     * and coordinates from the ResultSet. Sets comments related to the map marker's name
+     * using the getMarkerComments method. Applies filters to the MapMarker object for validation
+     * and processing. Returns the processed MapMarker object.
+     */
+    private MapMarker mapResultSetToMapMarker(ResultSet resultSet) throws SQLException {
+        Pipe<String> pipe1 = new Pipe<>();
+        pipe1.addFilter(new UppercaseFilter());
+
+        Pipe<MapMarker> pipe2 = new Pipe<>();
+        pipe2.addFilter(new MarkerValidationFilter());
+
+        String name = resultSet.getString("NAME");
+        String description = resultSet.getString("DESCRIPTION");
+        String city = resultSet.getString("CITY");
+        String imageUrl = resultSet.getString("IMAGE_URL");
+        Double review = resultSet.getDouble("REVIEW");
+        Integer workingStart = resultSet.getInt("WORKING_START");
+        Integer workingEnd = resultSet.getInt("WORKING_END");
+        double xCoord = resultSet.getDouble("X_COORD");
+        double yCoord = resultSet.getDouble("Y_COORD");
+
+        MapMarker mapMarker = new MapMarker(name, description, city, imageUrl, review, workingStart, workingEnd, xCoord, yCoord);
+        mapMarker.setComments(getMarkerComments(name)); // Assuming getMarkerComments is defined elsewhere
+        mapMarker = pipe2.runFilters(mapMarker);
+        return mapMarker;
+    }
+
+    // Handle exception
     private void handleSQLException(SQLException e) {
         e.printStackTrace();
     }
