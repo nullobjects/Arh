@@ -197,22 +197,7 @@ public class MapRepository implements AutoCloseable {
              ResultSet resultSet = statement.executeQuery("SELECT * FROM PUBLIC.MAP_TRACKERS")) {
 
             while (resultSet.next()) {
-                String name = resultSet.getString("NAME");
-                //name = pipe1.runFilters(name);
-                String description = resultSet.getString("DESCRIPTION");
-                String city = resultSet.getString("CITY");
-                String imageUrl = resultSet.getString("IMAGE_URL");
-                Double review = resultSet.getDouble("REVIEW");
-                Integer working_start = resultSet.getInt("WORKING_START");
-                Integer working_end = resultSet.getInt("WORKING_END");
-                double xCoord = resultSet.getDouble("X_COORD");
-                double yCoord = resultSet.getDouble("Y_COORD");
-
-                MapMarker mapMarker = new MapMarker(name, description, city, imageUrl, review, working_start, working_end, xCoord, yCoord);
-                mapMarker.setComments(GetMarkerComments(name));
-                mapMarker = pipe2.runFilters(mapMarker);
-
-                markers.add(mapMarker);
+                markers.add(mapResultSetToMapMarker(resultSet));
             }
 
         } catch (SQLException e) {
@@ -233,12 +218,6 @@ public class MapRepository implements AutoCloseable {
         }
     }
     public MapMarker findMarkerByName(String markerName) {
-        Pipe<String> pipe1 = new Pipe<>();
-        pipe1.addFilter(new UppercaseFilter());
-
-        Pipe<MapMarker> pipe2 = new Pipe<>();
-        pipe2.addFilter(new MarkerValidationFilter());
-
         try (PreparedStatement statement = prepareStatementForName(markerName);
              ResultSet resultSet = statement.executeQuery()) {
 
@@ -260,6 +239,12 @@ public class MapRepository implements AutoCloseable {
     }
 
     private MapMarker mapResultSetToMapMarker(ResultSet resultSet) throws SQLException {
+        Pipe<String> pipe1 = new Pipe<>();
+        pipe1.addFilter(new UppercaseFilter());
+
+        Pipe<MapMarker> pipe2 = new Pipe<>();
+        pipe2.addFilter(new MarkerValidationFilter());
+
         String name = resultSet.getString("NAME");
         String description = resultSet.getString("DESCRIPTION");
         String city = resultSet.getString("CITY");
@@ -272,6 +257,7 @@ public class MapRepository implements AutoCloseable {
 
         MapMarker mapMarker = new MapMarker(name, description, city, imageUrl, review, workingStart, workingEnd, xCoord, yCoord);
         mapMarker.setComments(getMarkerComments(name)); // Assuming getMarkerComments is defined elsewhere
+        mapMarker = pipe2.runFilters(mapMarker);
         return mapMarker;
     }
 
