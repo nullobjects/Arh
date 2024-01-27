@@ -5,11 +5,11 @@ import nullobjects.arh1.repository.MapRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
+
 
 @Service
 public class MapService {
-    private MapRepository mapRepository;
+    private final MapRepository mapRepository;
     MapService(MapRepository mapRepository) {
         this.mapRepository = mapRepository;
     }
