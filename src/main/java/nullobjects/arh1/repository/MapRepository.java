@@ -286,7 +286,6 @@ public class MapRepository implements AutoCloseable {
         } catch (SQLException e) {
             handleSQLException(e);
         }
-
         return false;
     }
 
@@ -301,7 +300,7 @@ public class MapRepository implements AutoCloseable {
         try (PreparedStatement statement = prepareStatementForCity(cityName)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return extractMapMarkerFromResultSet(resultSet);
+                    return mapResultSetToMapMarker(resultSet);
                 }
             }
         } catch (SQLException e) {
@@ -315,22 +314,6 @@ public class MapRepository implements AutoCloseable {
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE UPPER(CITY) LIKE ?");
         statement.setString(1, "%" + cityName.toUpperCase() + "%");
         return statement;
-    }
-
-    private MapMarker extractMapMarkerFromResultSet(ResultSet resultSet) throws SQLException {
-        String name = resultSet.getString("NAME");
-        String description = resultSet.getString("DESCRIPTION");
-        String city = resultSet.getString("CITY");
-        String imageUrl = resultSet.getString("IMAGE_URL");
-        Double review = resultSet.getDouble("REVIEW");
-        Integer workingStart = resultSet.getInt("WORKING_START");
-        Integer workingEnd = resultSet.getInt("WORKING_END");
-        double xCoord = resultSet.getDouble("X_COORD");
-        double yCoord = resultSet.getDouble("Y_COORD");
-
-        MapMarker mapMarker = new MapMarker(name, description, city, imageUrl, review, workingStart, workingEnd, xCoord, yCoord);
-        mapMarker.setComments(getMarkerComments(name));
-        return mapMarker;
     }
 
     private List<String> getMarkerComments(String markerName) {
