@@ -56,8 +56,7 @@ public class LoginController {
             @RequestParam String username,
             @RequestParam String password,
             @RequestParam String confirm_password,
-            RedirectAttributes redirectAttributes,
-            HttpSession httpSession
+            RedirectAttributes redirectAttributes
     ) {
         if (!password.equals(confirm_password)) {
             redirectAttributes.addFlashAttribute("error", "Passwords do not match.");
