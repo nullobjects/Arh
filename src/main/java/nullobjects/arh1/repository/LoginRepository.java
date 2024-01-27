@@ -39,35 +39,44 @@ public class LoginRepository {
     }
 
     public boolean RegisterUser(User user) throws UsernameExistsException {
-        String query = "SELECT '1' FROM PUBLIC.USERS WHERE USERNAME = ?";
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, user.getUsername());
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) { // Veke postoi takov username
-                    throw new UsernameExistsException();
-                }
-
-                String query2 = "INSERT INTO PUBLIC.USERS (USERNAME, PASSWORD) VALUES (?, ?)";
-
-                try (PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
-                    preparedStatement2.setString(1, user.getUsername());
-                    preparedStatement2.setString(2, user.getPassword());
-
-                    int rowsAffected = preparedStatement2.executeUpdate();
-                    return rowsAffected > 0;
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (isUsernameExists(user.getUsername())) {
+            throw new UsernameExistsException();
         }
 
-        return false;
+        String insertQuery = "INSERT INTO PUBLIC.USERS (USERNAME, PASSWORD) VALUES (?, ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(2, user.getPassword());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            handleSQLException(e);
+            return false;
+        }
     }
+
+    private boolean isUsernameExists(String username) {
+        String selectQuery = "SELECT 1 FROM PUBLIC.USERS WHERE USERNAME = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+            preparedStatement.setString(1, username);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            handleSQLException(e);
+            return false;
+        }
+    }
+
+    private void handleSQLException(SQLException e) {
+        // Log or handle the exception according to your application's requirements
+        e.printStackTrace();
+    }
+
 
     public User GetUserByUserName(String username) {
         try (Statement statement = connection.createStatement();

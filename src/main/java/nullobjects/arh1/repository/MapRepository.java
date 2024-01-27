@@ -233,6 +233,12 @@ public class MapRepository implements AutoCloseable {
         }
     }
     public MapMarker findMarkerByName(String markerName) {
+        Pipe<String> pipe1 = new Pipe<>();
+        pipe1.addFilter(new UppercaseFilter());
+
+        Pipe<MapMarker> pipe2 = new Pipe<>();
+        pipe2.addFilter(new MarkerValidationFilter());
+
         try (PreparedStatement statement = prepareStatementForName(markerName);
              ResultSet resultSet = statement.executeQuery()) {
 
@@ -286,6 +292,12 @@ public class MapRepository implements AutoCloseable {
 
 
     public MapMarker findMarkerByCity(String cityName) {
+        Pipe<String> pipe1 = new Pipe<>();
+        pipe1.addFilter(new UppercaseFilter());
+
+        Pipe<MapMarker> pipe2 = new Pipe<>();
+        pipe2.addFilter(new MarkerValidationFilter());
+
         try (PreparedStatement statement = prepareStatementForCity(cityName)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
