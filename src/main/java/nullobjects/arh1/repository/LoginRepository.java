@@ -73,7 +73,6 @@ public class LoginRepository {
     }
 
     private void handleSQLException(SQLException e) {
-        // Log or handle the exception according to your application's requirements
         e.printStackTrace();
     }
 
@@ -86,7 +85,7 @@ public class LoginRepository {
                 return new User(username, resultSet.getString("password"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
 
         return null;
@@ -103,7 +102,7 @@ public class LoginRepository {
                 return resultSet.next();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
 
         return false;
