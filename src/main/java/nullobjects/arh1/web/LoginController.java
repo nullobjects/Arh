@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-    private LoginService loginService;
+    private final LoginService loginService;
     LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
