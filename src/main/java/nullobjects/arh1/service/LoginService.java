@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class LoginService {
-    private LoginRepository loginRepository;
+    private final LoginRepository loginRepository;
     LoginService(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
