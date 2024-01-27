@@ -34,7 +34,7 @@ public class LoginRepository {
 
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
     }
 
@@ -71,11 +71,6 @@ public class LoginRepository {
             return false;
         }
     }
-
-    private void handleSQLException(SQLException e) {
-        e.printStackTrace();
-    }
-
 
     public User GetUserByUserName(String username) {
         try (Statement statement = connection.createStatement();
@@ -120,8 +115,13 @@ public class LoginRepository {
                 userList.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            handleSQLException(e);
         }
         return userList;
     }
+
+    private void handleSQLException(SQLException e) {
+        e.printStackTrace();
+    }
+
 }
