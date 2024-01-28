@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Add Gallery</title>
+    </head>
+
+    <body>
+        <form th:action="@{/add}" th:method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Name">
+            <br>
+            <label for="desc">Discription:</label>
+            <input type="text" id="desc" name="desc" required placeholder="Discription">
+            <br>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required placeholder="City">
+            <br>
+            <label for="image">Image URL</label>
+            <input type="url" id="image" name="image" required placeholder="Image URL">
+            <br>
+            <label for="start">Opening hour</label>
+            <input type="number" id="start" name="start" required placeholder="Opening hour">
+            <br>
+            <label for="end">Closing hour</label>
+            <input type="number" id="end" name="end" required placeholder="Closing hour">
+            <br>
+            <label for="x_coord">X-Cord</label>
+            <input type="text" id="x_coord" name="x_coord" pattern="\d+(\.\d+)?" required placeholder="X-Cord">
+            <br>
+            <label for="y_coord">Y-Cord</label>
+            <input type="text" id="y_coord" name="y_coord" pattern="\d+(\.\d+)?" required placeholder="Y_Cord">
+
+            <br><input type="submit" value="Add">
+        </form>
+        <a th:href="@{/}" class="btn btn-danger">Back</a>
+    </body>
+</html>
