@@ -12,10 +12,12 @@ import java.util.List;
 @Service
 public class LoginService {
     private final LoginRepository loginRepository;
+
     LoginService(LoginRepository loginRepository) {
         this.loginRepository = loginRepository;
     }
 
+    // Register a new user
     public boolean RegisterUser(String username, String password) throws UsernameTooShortException, PasswordTooShortException, UsernameExistsException {
         if (username.length() < 5) {
             throw new UsernameTooShortException();
@@ -26,14 +28,17 @@ public class LoginService {
         return loginRepository.RegisterUser(new User(username, password));
     }
 
+    // Login a user
     public boolean LoginUser(String username, String password) {
         return loginRepository.LoginUser(new User(username, password));
     }
 
+    // Retrieve a user by username
     public User GetUserByUserName(String username) {
         return loginRepository.GetUserByUserName(username);
     }
 
+    // Get all users
     public List<User> getUsers(){
         return loginRepository.getUsers();
     }
