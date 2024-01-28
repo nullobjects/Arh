@@ -1,3 +1,4 @@
+// Define options for initializing the map
 let options = {
     center:[41.607, 21.753],
     zoom:9,
@@ -6,17 +7,24 @@ let options = {
     shadowUrl:"/images/marker-shadow-icon.png",
 }
 
+// Create a new Leaflet map instance
 let mapa = new L.map('map', options);
+
+// Add a tile layer to the map using Thunderforest tiles
 let layer = new L.TileLayer('https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=2a2a8fb8338646f1bfecaefa5e7de596');
 mapa.addLayer(layer);
+
+// Define variables for storing markers and comments
 let originalMarkers = [];
 let markerComments = {};
 
+// Add attribution to OpenStreetMap
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(mapa);
 
+// Set the maximum bounds for the map
 mapa.setMaxBounds([
     [42.472,24.082],
     [40.647,19.841],
@@ -26,18 +34,22 @@ var img = document.createElement('img');
 img.width = 100;
 img.height = 100;
 
+// Define variables for storing markers and comments
 let mapMarkers = {};
 let mapMarkerCount = 0;
 
+// Fetch markers data from the API
 fetch("http://localhost:8080/api/GetMarkers")
     .then(response => {
+        // Check if response is OK
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
+        // Parse response JSON
         return response.json();
     })
     .then(data => {
+        // Process retrieved data
         mapMarkers = {}
         mapMarkerCount = 0;
         for (let key in data){
@@ -47,6 +59,7 @@ fetch("http://localhost:8080/api/GetMarkers")
             marker.name = artgal.name;
             marker.city = artgal.city;
             marker.comments = artgal.comments;
+            // Define HTML content for marker popup
             let commentForm = `
                 <div id="commentForm">
                     <form onsubmit="event.preventDefault(); addMarkerComment('${marker.name}')">
@@ -66,6 +79,7 @@ fetch("http://localhost:8080/api/GetMarkers")
             }
             commentForm += '</div>';
 
+            // Bind popup content to marker
             marker.bindPopup(
                 artgal.name + "<br>" +
                 artgal.description + "<br>" +
@@ -97,11 +111,13 @@ fetch("http://localhost:8080/api/GetMarkers")
                 "  <label class=\"radio-label\" for=\"star1\" title=\"1 star\">1 star</label>\n" +
                 "</form>" + "</div>")
 
+            // Add marker to map and store in variables
             mapMarkers[mapMarkerCount] = marker;
             mapMarkerCount = mapMarkerCount + 1;
             originalMarkers.push(marker);
             markerComments[artgal.name] = "";
 
+            // Event listener for opening popup
             marker.on('popupopen', function() {
                 if (marker.comments.length > 0) {
                     let notice = document.getElementById("default_notice")
@@ -110,6 +126,7 @@ fetch("http://localhost:8080/api/GetMarkers")
             });
 
         }
+        // Add markers to the map
         originalMarkers.forEach(marker => {
             marker.addTo(mapa);
         });
@@ -118,6 +135,7 @@ fetch("http://localhost:8080/api/GetMarkers")
         console.error("Couldn't get the map markers:", error);
     });
 
+// Event listener for key press on search input
 document.addEventListener('DOMContentLoaded', function() {
     function handleKeyPress(event) {
         if (event.keyCode === 13) {
@@ -137,6 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('searchText').addEventListener('keypress', handleKeyPress);
 });
 
+// Function to search markers by name
 function searchMarkers(name) {
             let found= false;
             for (let i = 0; i < originalMarkers.length; i++) {
@@ -155,7 +174,7 @@ function searchMarkers(name) {
             }
 }
 
-
+// Function to filter markers by city
 function CityFilter(city){
             originalMarkers.forEach(marker => {
                 marker.addTo(mapa);
@@ -168,7 +187,7 @@ function CityFilter(city){
                 }
             }
 }
-
+// Function to add a comment to a marker
 function addMarkerComment(marker_name) {
     let commentText = document.getElementById('markerComment').value;
     mapa.closePopup();
