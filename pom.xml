@@ -10,7 +10,7 @@
     </parent>
     <groupId>nullobjects</groupId>
     <artifactId>Arh1</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>Arh1</name>
     <description>Arh1</description>
     <properties>
