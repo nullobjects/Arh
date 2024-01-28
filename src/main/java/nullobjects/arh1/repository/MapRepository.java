@@ -17,10 +17,12 @@ public class MapRepository implements AutoCloseable {
 
     MapRepository() {
         try {
+            // Establish database connection and create tables
             connection = DriverManager.getConnection("jdbc:h2:file:./src/main/resources/static/mapdb", "map_user", "map_password");
             CreateMapMarkerTable();
             CreateMapMarkerCommentTable();
 
+            // Insert map markers into the database
             InsertMapMarker(new MapMarker("Arte", "077834150, http://www.artonline.mk/, Boulevard Mitropolit Teodosij Gologanov 49", "Skopje", "/images/ARTE Galerija.jpg", 1.5, 60, 60, 41.99491581140953, 21.42130350535809));
             InsertMapMarker(new MapMarker("Zograf", "075584909, Dame Gruev", "Skopje", "/images/Art Gallery Zograf.JPG", 1.5, 60, 60, 41.99730016371808, 21.427663092023362));
             InsertMapMarker(new MapMarker("Daleria", "070300974, Dimitrie Cupovski 3", "Skopje", "/images/Art Gallery „Daleria“.jpg", 1.5, 60, 60, 42.00195409802084, 21.42461300829461));
@@ -45,6 +47,7 @@ public class MapRepository implements AutoCloseable {
         }
     }
 
+    // Creates the table for storing map markers if it doesn't already exist.
     private void CreateMapMarkerTable() {
         try {
             Statement statement = connection.createStatement();
@@ -69,6 +72,7 @@ public class MapRepository implements AutoCloseable {
         }
     }
 
+    // Creates the table for storing comments related to map markers if it doesn't already exist.
     private void CreateMapMarkerCommentTable() {
         try {
             Statement statement = connection.createStatement();
@@ -88,6 +92,7 @@ public class MapRepository implements AutoCloseable {
         }
     }
 
+    // Inserts or updates a map marker into the database.
     public void InsertMapMarker(MapMarker mapMarker) {
         try {
             PreparedStatement statement = connection.prepareStatement("""
@@ -145,6 +150,7 @@ public class MapRepository implements AutoCloseable {
         }
     }
 
+    // Inserts a comment for a specific map marker into the database.
     public void InsertMarkerComment(String name, String username, String comment) {
         try {
             PreparedStatement statement = connection.prepareStatement("""
@@ -162,6 +168,7 @@ public class MapRepository implements AutoCloseable {
         }
     }
 
+    // Retrieves comments for a specific map marker from the database.
     public List<String> GetMarkerComments(String name) {
         List<String> comments = new ArrayList<>();
 
@@ -184,13 +191,8 @@ public class MapRepository implements AutoCloseable {
         return comments;
     }
 
+    // Retrieves all map markers from the database.
     public List<MapMarker> getAllMarkers() {
-        Pipe<String> pipe1 = new Pipe<>();
-        pipe1.addFilter(new UppercaseFilter());
-
-        Pipe<MapMarker> pipe2 = new Pipe<>();
-        pipe2.addFilter(new MarkerValidationFilter());
-
         List<MapMarker> markers = new ArrayList<>();
 
         try (Statement statement = connection.createStatement();
@@ -207,6 +209,7 @@ public class MapRepository implements AutoCloseable {
         return markers;
     }
 
+    // Closes the database connection.
     @Override
     public void close() {
         try {
@@ -218,6 +221,7 @@ public class MapRepository implements AutoCloseable {
         }
     }
 
+    // Finds a map marker by its name in the database.
     public MapMarker findMarkerByName(String markerName) {
         try (PreparedStatement statement = prepareStatementForName(markerName);
              ResultSet resultSet = statement.executeQuery()) {
@@ -233,6 +237,7 @@ public class MapRepository implements AutoCloseable {
         return null;
     }
 
+    // Deletes a map marker from the database by its name.
     public boolean delete(String name) {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM PUBLIC.MAP_TRACKERS WHERE NAME = ?");
@@ -246,7 +251,7 @@ public class MapRepository implements AutoCloseable {
         return false;
     }
 
-
+    // Finds a map marker by its city in the database.
     public MapMarker findMarkerByCity(String cityName) {
         Pipe<String> pipe1 = new Pipe<>();
         pipe1.addFilter(new UppercaseFilter());
@@ -266,9 +271,11 @@ public class MapRepository implements AutoCloseable {
         return null;
     }
 
-    public void add(String name,String disc,String city,String image,int start,int end,double x,double y){
-        InsertMapMarker(new MapMarker(name,disc,city,image,0D,start,end,x,y));
+    // Adds a new map marker to the database.
+    public void add(String name, String disc, String city, String image, int start, int end, double x, double y) {
+        InsertMapMarker(new MapMarker(name, disc, city, image, 0D, start, end, x, y));
     }
+
 
     public void addComment(String name, String comment) {
 
