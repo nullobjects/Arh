@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Delete Gallery</title>
+    </head>
+
+    <body>
+
+        <form th:action="@{/delete_gal}" th:method = "POST">
+            <label th:each="marker : ${markers}">
+                <input type="radio" th:name="name" th:value="${marker.getName()}">
+                <span th:text="${marker.getName()} + ' ' + ${marker.getDescription()}"></span>
+                <br>
+            </label>
+            <button type="submit">Delete</button>
+        </form>
+    </body>
+</html>
