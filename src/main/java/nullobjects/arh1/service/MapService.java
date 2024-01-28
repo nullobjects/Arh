@@ -19,6 +19,11 @@ public class MapService {
         return mapRepository.getAllMarkers();
     }
 
+    // Get a marker
+    public MapMarker getMarker(String name) {
+        return mapRepository.getMarker(name);
+    }
+
     // Find a marker by name
     public MapMarker findMarkerByName(String name) {
         return mapRepository.findMarkerByName(name);
@@ -47,5 +52,10 @@ public class MapService {
     // Get comments for a marker
     public List<String> getComments(String name) {
         return mapRepository.GetMarkerComments(name);
+    }
+
+    // Find a specific comment from a marker with given text
+    public String getComment(String markerName, String commentText) {
+        return mapRepository.GetMarkerComment(markerName, commentText);
     }
 }

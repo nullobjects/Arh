@@ -36,6 +36,12 @@ public class MapController {
         return mapService.getAllMarkers();
     }
 
+    @GetMapping("/api/GetMarker/{name}")
+    @ResponseBody
+    public MapMarker GetMarker(@PathVariable String name) {
+        return mapService.getMarker(name);
+    }
+
     @GetMapping("/add_gal")
     public String addGal(Model model){
         model.addAttribute("marker",mapService.getAllMarkers());
@@ -95,9 +101,21 @@ public class MapController {
         return "redirect:/?0";
     }
 
+    @GetMapping("/api/GetComment/{marker_name}/{comment_text}")
+    @ResponseBody
+    public String GetComment(@PathVariable String marker_name, @PathVariable String comment_text) {
+        return mapService.getComment(marker_name, comment_text);
+    }
+
     @GetMapping("/api/GetComments")
     @ResponseBody
     public List<String> GetComments(@RequestParam String name) {
+        return mapService.getComments(name);
+    }
+
+    @GetMapping("/api/GetCommentsPath/{name}")
+    @ResponseBody
+    public List<String> GetCommentsPath(@PathVariable String name) {
         return mapService.getComments(name);
     }
 }

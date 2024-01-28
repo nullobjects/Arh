@@ -173,8 +173,8 @@ public class MapRepository implements AutoCloseable {
         List<String> comments = new ArrayList<>();
 
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKER_COMMENTS WHERE MARKER_NAME = ?");
-            statement.setString(1, name);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKER_COMMENTS WHERE UPPER(MARKER_NAME) = ?");
+            statement.setString(1, '%' + name.toUpperCase() + '%');
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -207,6 +207,26 @@ public class MapRepository implements AutoCloseable {
         }
 
         return markers;
+    }
+
+    // Retrieves a map marker from the database.
+    public MapMarker getMarker(String name) {
+        MapMarker marker = null;
+
+        try {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKERS WHERE UPPER(NAME) LIKE ?");
+             statement.setString(1, '%' + name.toUpperCase() + '%');
+             ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                marker = mapResultSetToMapMarker(resultSet);
+            }
+
+        } catch (SQLException e) {
+            handleSQLException(e);
+        }
+
+        return marker;
     }
 
     // Closes the database connection.
@@ -347,5 +367,27 @@ public class MapRepository implements AutoCloseable {
         e.printStackTrace();
     }
 
+    /**
+     * Converts a ResultSet containing data about a map marker into a MapMarker object.
+     */
+    public String GetMarkerComment(String markerName, String commentText) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM PUBLIC.MAP_TRACKER_COMMENTS WHERE UPPER(MARKER_NAME) LIKE ? AND UPPER(COMMENT) LIKE ?");
+            statement.setString(1, '%' + markerName.toUpperCase() + '%');
+            statement.setString(2, '%' + commentText.toUpperCase() + '%');
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                return resultSet.getString("COMMENT");
+            }
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            handleSQLException(e);
+        }
+
+        return null;
+    }
 }
 
