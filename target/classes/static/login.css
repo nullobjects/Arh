@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    height: 100vh;
+    margin: 0; /* Reset default margin */
+}
+
+#bck {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Move behind other elements */
+    width: 100%;
+    height: 100%;
+    filter: blur(10px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-container {
+    position: relative; /* Ensure absolute positioning is contained within */
+    z-index: 1; /* Ensure above the background */
+}
+
+form {
+    position: relative; /* Relative to its container */
+    background-color: #1d1b1c;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: grey;
+    color: white;
+    cursor: pointer;
+}
+
+h2 {
+    color: white;
+    text-align: center;
+}
+
+/* Style for the register button */
+.register-button {
+    background-color: grey;
+    color: white;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+label{
+    color: white;
+}
+
+#back{
+    padding-left: 43%;
+    color: white;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+              integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+              crossOrigin=""/>
+        <link rel="stylesheet" href="/theme.css">
+
+        <meta charset="UTF-8">
+
+        <title>CultureMap</title>
+    </head>
+
+    <body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0" nonce="bkFZckwI"></script>
+    <div id="map"></div>
+    <!-- <img id="logo" src="/images/logo/nullobjects_white.png"/> -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/map.js"></script>
+
+    <img id="nullLogo" src="/images/logo/nullobjects_white.png" onclick="changePage()">
+    <img id="theme-change" src="/images/light_mode.png" onclick="changeTheme()">
+
+    <nav>
+        <ul>
+            <li>
+                <a href="#0" id="searchLink">SEARCH</a>
+                <ul>
+                    <div id="myOverlay" class="overlay">
+                        <div class="overlay-content">
+                            <form id="searchForm">
+                                <input id="searchText" type="text" placeholder="Search.." name="search">
+                            </form>
+                        </div>
+                    </div>
+                </ul>
+            </li>
+            <li>
+                <a href="#0">FILTER</a>
+            <ul>
+                <li><a onclick="CityFilter('Skopje')">Skopje</a></li>
+                <li><a onclick="CityFilter('Ohrid')">Ohrid</a></li>
+            </ul>
+            </li>
+            <li th:if="${session.get('user')}">
+                <a href="#0">CONTRIBUTE</a>
+                <ul>
+                    <li><a href=add_gal>ADD GALLERIES</a></li>
+                    <li><a href=delete_gal>REMOVE GALLERIES</a></li>
+                </ul>
+            </li>
+            <li th:if="!${session.get('user')}"><a id="login">LOGIN</a><script>
+                document.getElementById("login").addEventListener("click", function(event) {
+                    event.preventDefault();
+                    window.location.href = "/login";
+                });
+            </script></li>
+        </ul>
+    </nav>
+    </body>
+</html>

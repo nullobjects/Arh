@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: nullobjects.arh1.Arh1ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.184 s - in nullobjects.arh1.Arh1ApplicationTests

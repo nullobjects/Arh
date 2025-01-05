@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/login.css">
+</head>
+
+<body>
+<img id="bck" src="/images/map_dark.png">
+<div class="form-container">
+    <form th:action="@{/login}" method="POST">
+        <h2>Login</h2>
+
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <strong>Error:</strong> <span th:text="${error}"></span>
+        </div>
+
+        <input type="text" name="username" placeholder="Username" required><br>
+        <input type="password" name="password" placeholder="Password" required><br><br>
+        <input type="submit" value="Login">
+    </form>
+    <form th:action="@{/login/register_redirect}" method="POST">
+        <input type="submit" value="Register">
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  app:
+    image: amazoncorretto:21  # Use Amazon Corretto JDK 21 as the base image
+    command: ["java", "-jar", "/arh.jar"]  # Command to run inside the container
+    volumes:
+      - ./target/Arh1-1.0.0.jar:/arh.jar  # Mount the JAR file into the container
+    ports:
+      - "8080:8080"  # Map port 8080 on the host to port 8080 in the container
